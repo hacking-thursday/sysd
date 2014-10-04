@@ -4,7 +4,7 @@ import (
 	"runtime"
 
 	"github.com/docker/docker/api"
-	apiserver "github.com/docker/docker/api/server"
+	apiserver "api/server"
 	"github.com/docker/docker/daemon/networkdriver/bridge"
 	"github.com/docker/docker/dockerversion"
 	"github.com/docker/docker/engine"
