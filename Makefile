@@ -25,6 +25,7 @@ build_all:
 	#go get github.com/docker/libcontainer/cgroups/systemd
 	cd src/api/server; go build; go install
 	cd src/api; go build; go install
+	cd src/builtins; go build; go install
 	cd sysd/; go build
 
 run:
