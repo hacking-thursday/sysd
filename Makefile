@@ -18,3 +18,7 @@ build_all:
 	go get github.com/docker/docker/registry
 	go get github.com/docker/docker/utils
 	cd src/api/server; go build; go install
+	cd sysd/; go build
+
+run:
+	sysd/sysd
