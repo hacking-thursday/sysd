@@ -6,5 +6,15 @@ all:
 build_all:
 	go get code.google.com/p/go.net/websocket
 	go get github.com/gorilla/mux
-	cd src/api/server; go build
-
+	go get github.com/docker/libcontainer/user                                                                      
+	go get github.com/docker/docker/api
+	go get github.com/docker/docker/engine
+	go get github.com/docker/docker/pkg/listenbuffer
+	go get github.com/docker/docker/pkg/log
+	go get github.com/docker/docker/pkg/parsers
+	go get github.com/docker/docker/pkg/stdcopy
+	go get github.com/docker/docker/pkg/systemd
+	go get github.com/docker/docker/pkg/version
+	go get github.com/docker/docker/registry
+	go get github.com/docker/docker/utils
+	cd src/api/server; go build; go install
