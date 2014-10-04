@@ -4,6 +4,7 @@ import (
     "log"
     "builtins"
     "github.com/docker/docker/engine"
+    "os/exec"
 )
 
 func main() {
@@ -17,8 +18,12 @@ func main() {
     // 註冊自定義延伸指令
     eng.Register("info2", func(job *engine.Job) engine.Status {
             v := &engine.Env{}
-            v.SetInt("Containers", 1)
-            v.SetInt("Images", 42000)
+
+            out, err := exec.Command("uname","-a").Output()
+	    if( err == nil ){
+		    v.Set( "uname", string(out) )
+	    }
+
             if _, err := v.WriteTo(job.Stdout); err != nil {
                     return job.Error(err)
             }
