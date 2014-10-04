@@ -1,6 +1,4 @@
-dummy: build_all
-
-all: 
+build: 
 	GOPATH=$$(pwd) $(MAKE) build_all
 
 build_all:
@@ -17,7 +15,16 @@ build_all:
 	go get github.com/docker/docker/pkg/version
 	go get github.com/docker/docker/registry
 	go get github.com/docker/docker/utils
+	go get code.google.com/p/gosqlite/sqlite3
+	go get github.com/docker/libtrust
+	go get github.com/docker/libtrust/trustgraph
+	go get github.com/godbus/dbus
+	go get github.com/kr/pty
+	go get github.com/syndtr/gocapability/capability
+	go get github.com/tchap/go-patricia/patricia
+	#go get github.com/docker/libcontainer/cgroups/systemd
 	cd src/api/server; go build; go install
+	cd src/api; go build; go install
 	cd sysd/; go build
 
 run:

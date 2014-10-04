@@ -295,6 +295,12 @@ func getInfo(eng *engine.Engine, version version.Version, w http.ResponseWriter,
 	return nil
 }
 
+func getInfo2(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
+	w.Header().Set("Content-Type", "application/json")
+	eng.ServeHTTP(w, r)
+	return nil
+}
+
 func getEvents(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
 	if err := parseForm(r); err != nil {
 		return err
@@ -1248,6 +1254,7 @@ func createRouter(eng *engine.Engine, logging, enableCors bool, dockerVersion st
 			"/_ping":                          ping,
 			"/events":                         getEvents,
 			"/info":                           getInfo,
+			"/info2":                          getInfo2,
 			"/version":                        getVersion,
 			"/images/json":                    getImagesJSON,
 			"/images/viz":                     getImagesViz,
