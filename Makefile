@@ -1,5 +1,5 @@
 build: 
-	GOPATH=$$(pwd) $(MAKE) build_all
+	GOPATH=$$(pwd) TMPDIR="/tmp" $(MAKE) build_all
 
 build_all:
 	go get code.google.com/p/go.net/websocket
