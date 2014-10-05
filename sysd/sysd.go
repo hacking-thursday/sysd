@@ -35,6 +35,7 @@ func main() {
 		daemonCfg := &daemon.Config{}
 		daemonCfg.InstallFlags()
 		daemonCfg.Pidfile = "/tmp/sysd.pid"
+		daemonCfg.Root = "/tmp"
 
 		d, err := daemon.NewDaemon(daemonCfg, eng)
 		if err != nil {
