@@ -3,6 +3,7 @@ package main
 import (
     "log"
     "builtins"
+    "daemon"
     "github.com/docker/docker/engine"
     "os/exec"
 )
@@ -31,6 +32,18 @@ func main() {
     })
 
     go func() {
+            daemonCfg := &daemon.Config{}
+            daemonCfg.InstallFlags()
+            daemonCfg.Pidfile = "/tmp/sysd.pid"
+
+            d, err := daemon.NewDaemon(daemonCfg, eng)
+            if err != nil {
+                    log.Fatal(err)
+            }
+            if err := d.Install(eng); err != nil {
+                    log.Fatal(err)
+            }
+
             if err := eng.Job("acceptconnections").Run(); err != nil {
                     log.Fatal(err)
             }
