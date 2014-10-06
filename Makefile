@@ -30,4 +30,4 @@ build_all:
 	cd sysd/; go build
 
 run:
-	sysd/sysd
+	DEBUG=1 sysd/sysd
