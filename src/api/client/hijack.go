@@ -11,7 +11,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/docker/docker/api"
+	"api"
 	"github.com/docker/docker/dockerversion"
 	"github.com/docker/docker/pkg/log"
 	"github.com/docker/docker/pkg/promise"

@@ -24,7 +24,7 @@ import (
 	"github.com/docker/libcontainer/user"
 	"github.com/gorilla/mux"
 
-	"github.com/docker/docker/api"
+	"api"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/listenbuffer"
 	"github.com/docker/docker/pkg/log"

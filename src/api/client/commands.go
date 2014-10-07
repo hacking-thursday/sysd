@@ -22,7 +22,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/docker/docker/api"
+	"api"
 	"github.com/docker/docker/dockerversion"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/graph"
