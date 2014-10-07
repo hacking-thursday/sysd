@@ -4,7 +4,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/docker/docker/daemon/networkdriver/portallocator"
+	"daemon/networkdriver/portallocator"
 	"github.com/docker/docker/pkg/iptables"
 )
 

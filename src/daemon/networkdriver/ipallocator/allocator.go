@@ -6,7 +6,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/docker/docker/daemon/networkdriver"
+	"daemon/networkdriver"
 )
 
 // allocatedMap is thread-unsafe set of allocated IP

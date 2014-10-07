@@ -3,8 +3,8 @@
 package daemon
 
 import (
-	"github.com/docker/docker/daemon/graphdriver"
-	"github.com/docker/docker/daemon/graphdriver/aufs"
+	"daemon/graphdriver"
+	"daemon/graphdriver/aufs"
 	"github.com/docker/docker/graph"
 	"github.com/docker/docker/pkg/log"
 )

@@ -4,7 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"github.com/docker/docker/daemon/graphdriver"
+	"daemon/graphdriver"
 	"github.com/docker/docker/pkg/archive"
 	"io/ioutil"
 	"os"

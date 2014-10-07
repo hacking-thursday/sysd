@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"path"
 
-	"github.com/docker/docker/daemon/graphdriver"
+	"daemon/graphdriver"
 	"github.com/docker/libcontainer/label"
 )
 

@@ -6,7 +6,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/docker/docker/daemon/networkdriver/portallocator"
+	"daemon/networkdriver/portallocator"
 	"github.com/docker/docker/pkg/iptables"
 	"github.com/docker/docker/pkg/log"
 )

@@ -16,7 +16,7 @@ import (
 	"github.com/docker/libcontainer/devices"
 	"github.com/docker/libcontainer/label"
 
-	"github.com/docker/docker/daemon/execdriver"
+	"daemon/execdriver"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/image"
 	"github.com/docker/docker/links"

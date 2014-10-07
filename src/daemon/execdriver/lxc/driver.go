@@ -17,7 +17,7 @@ import (
 
 	"github.com/kr/pty"
 
-	"github.com/docker/docker/daemon/execdriver"
+	"daemon/execdriver"
 	"github.com/docker/docker/pkg/log"
 	"github.com/docker/docker/pkg/term"
 	"github.com/docker/docker/utils"

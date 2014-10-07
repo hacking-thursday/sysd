@@ -2,7 +2,7 @@
 
 package lxc
 
-import "github.com/docker/docker/daemon/execdriver"
+import "daemon/execdriver"
 
 func setHostname(hostname string) error {
 	panic("Not supported on darwin")

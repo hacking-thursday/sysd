@@ -8,7 +8,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/docker/docker/daemon/graphdriver"
+	"daemon/graphdriver"
 	"github.com/docker/docker/pkg/log"
 	"github.com/docker/docker/pkg/mount"
 	"github.com/docker/docker/pkg/units"

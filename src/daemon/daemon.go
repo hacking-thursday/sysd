@@ -15,12 +15,12 @@ import (
 
 	"github.com/docker/libcontainer/label"
 
-	"github.com/docker/docker/daemon/execdriver"
-	"github.com/docker/docker/daemon/execdriver/lxc"
-	"github.com/docker/docker/daemon/graphdriver"
-	_ "github.com/docker/docker/daemon/graphdriver/vfs"
-	_ "github.com/docker/docker/daemon/networkdriver/bridge"
-	"github.com/docker/docker/daemon/networkdriver/portallocator"
+	"daemon/execdriver"
+	"daemon/execdriver/lxc"
+	"daemon/graphdriver"
+	_ "daemon/graphdriver/vfs"
+	_ "daemon/networkdriver/bridge"
+	"daemon/networkdriver/portallocator"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/graph"
 	"github.com/docker/docker/image"

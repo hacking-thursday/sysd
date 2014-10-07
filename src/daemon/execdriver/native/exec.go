@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/docker/docker/daemon/execdriver"
+	"daemon/execdriver"
 	"github.com/docker/docker/reexec"
 	"github.com/docker/libcontainer"
 	"github.com/docker/libcontainer/namespaces"

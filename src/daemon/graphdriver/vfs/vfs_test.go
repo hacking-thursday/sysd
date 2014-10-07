@@ -1,7 +1,7 @@
 package vfs
 
 import (
-	"github.com/docker/docker/daemon/graphdriver/graphtest"
+	"daemon/graphdriver/graphtest"
 	"testing"
 )
 

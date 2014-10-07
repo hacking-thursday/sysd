@@ -1,7 +1,7 @@
 package btrfs
 
 import (
-	"github.com/docker/docker/daemon/graphdriver/graphtest"
+	"daemon/graphdriver/graphtest"
 	"testing"
 )
 

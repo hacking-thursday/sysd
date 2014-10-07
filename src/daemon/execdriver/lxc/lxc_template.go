@@ -4,7 +4,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/docker/docker/daemon/execdriver"
+	"daemon/execdriver"
 	"github.com/docker/libcontainer/label"
 )
 

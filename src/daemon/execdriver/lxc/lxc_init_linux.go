@@ -5,8 +5,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/docker/docker/daemon/execdriver"
-	"github.com/docker/docker/daemon/execdriver/native/template"
+	"daemon/execdriver"
+	"daemon/execdriver/native/template"
 	"github.com/docker/libcontainer/namespaces"
 	"github.com/docker/libcontainer/security/capabilities"
 	"github.com/docker/libcontainer/system"

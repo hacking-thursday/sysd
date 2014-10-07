@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/docker/docker/daemon/execdriver"
+	"daemon/execdriver"
 	"github.com/docker/libcontainer/devices"
 )
 
