@@ -13,6 +13,8 @@ build_all:
 	go get github.com/kr/pty
 	go get github.com/syndtr/gocapability/capability
 	go get github.com/tchap/go-patricia/patricia
+	# check and patch
+	test "`md5sum src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go | cut -c-7 `" == "4d0aedc" && cp -v misc/apply_systemd.go src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go || true
 	# start build
 	cd src/api/server; go build; go install
 	cd src/api; go build; go install
