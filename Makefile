@@ -6,6 +6,8 @@ build_all:
 	go get github.com/docker/libcontainer/user
 	go get github.com/docker/docker/engine
 	go get github.com/docker/docker/pkg/systemd
+	go get code.google.com/p/go.net/websocket
+	go get github.com/gorilla/mux
 	# deps for src/daemon
 	go get code.google.com/p/gosqlite/sqlite3
 	go get github.com/docker/libtrust
