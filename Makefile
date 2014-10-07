@@ -1,10 +1,10 @@
-build: 
+build:
 	GOPATH=$$(pwd) TMPDIR="/tmp" $(MAKE) build_all
 
 build_all:
 	go get code.google.com/p/go.net/websocket
 	go get github.com/gorilla/mux
-	go get github.com/docker/libcontainer/user                                                                      
+	go get github.com/docker/libcontainer/user
 	go get github.com/docker/docker/api
 	go get github.com/docker/docker/engine
 	go get github.com/docker/docker/pkg/listenbuffer
@@ -22,7 +22,6 @@ build_all:
 	go get github.com/kr/pty
 	go get github.com/syndtr/gocapability/capability
 	go get github.com/tchap/go-patricia/patricia
-	#go get github.com/docker/libcontainer/cgroups/systemd
 	cd src/api/server; go build; go install
 	cd src/api; go build; go install
 	cd src/builtins; go build; go install
