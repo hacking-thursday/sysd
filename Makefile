@@ -25,6 +25,7 @@ build_all:
 	cd src/api; go build; go install
 	cd src/builtins; go build; go install
 	cd src/daemon; go build; go install
+	cd src/mods; go build; go install
 	cd sysd/; go build
 
 run:
