@@ -4,40 +4,14 @@ import (
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/log"
 	"github.com/docker/docker/pkg/version"
-	"github.com/docker/docker/utils"
 	"mods"
 	"net/http"
 	"os/exec"
-	"strings"
 )
 
 func init() {
 	log.Debugf("Initializing module...")
 	mods.Register("GET", "/info2", getInfo2)
-}
-
-//If we don't do this, POST method without Content-type (even with empty body) will fail
-func parseForm(r *http.Request) error {
-	if r == nil {
-		return nil
-	}
-	if err := r.ParseForm(); err != nil && !strings.HasPrefix(err.Error(), "mime:") {
-		return err
-	}
-	return nil
-}
-
-func streamJSON(job *engine.Job, w http.ResponseWriter, flush bool) {
-	w.Header().Set("Content-Type", "application/json")
-	if job.GetenvBool("lineDelim") {
-		w.Header().Set("Content-Type", "application/x-json-stream")
-	}
-
-	if flush {
-		job.Stdout.Add(utils.NewWriteFlusher(w))
-	} else {
-		job.Stdout.Add(w)
-	}
 }
 
 func getInfo2(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
@@ -53,7 +27,7 @@ func getInfo2(eng *engine.Engine, version version.Version, w http.ResponseWriter
 		out.Set("UA", r.Header.Get("User-Agent"))
 
 		// 取用 Request 的 GET/POST 變數
-		if err := parseForm(r); err == nil {
+		if err := mods.ParseForm(r); err == nil {
 			out.Set("var0", r.Form.Get("var0"))
 		}
 
@@ -73,7 +47,7 @@ func getInfo2(eng *engine.Engine, version version.Version, w http.ResponseWriter
 	})
 
 	var job = eng.Job("my_cmd", "the_arg0")
-	streamJSON(job, w, false)
+	mods.StreamJSON(job, w, false)
 
 	if err := job.Run(); err != nil {
 		return err
