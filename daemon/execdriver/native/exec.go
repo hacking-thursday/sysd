@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"daemon/execdriver"
+	"github.com/hacking-thursday/sysd/daemon/execdriver"
 	"github.com/docker/docker/reexec"
 	"github.com/docker/libcontainer"
 	"github.com/docker/libcontainer/namespaces"

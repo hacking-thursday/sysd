@@ -11,7 +11,7 @@ import (
 	"runtime"
 	"strings"
 
-	"api"
+	"github.com/hacking-thursday/sysd/api"
 	"github.com/docker/docker/dockerversion"
 	"github.com/docker/docker/pkg/log"
 	"github.com/docker/docker/pkg/promise"

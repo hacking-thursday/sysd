@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"daemon/execdriver"
+	"github.com/hacking-thursday/sysd/daemon/execdriver"
 	"github.com/docker/libcontainer/devices"
 )
 

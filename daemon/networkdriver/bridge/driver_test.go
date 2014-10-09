@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"daemon/networkdriver/portmapper"
+	"github.com/hacking-thursday/sysd/daemon/networkdriver/portmapper"
 	"github.com/docker/docker/engine"
 )
 

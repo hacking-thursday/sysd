@@ -1,7 +1,7 @@
 package btrfs
 
 import (
-	"daemon/graphdriver/graphtest"
+	"github.com/hacking-thursday/sysd/daemon/graphdriver/graphtest"
 	"testing"
 )
 

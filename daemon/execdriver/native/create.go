@@ -8,8 +8,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"daemon/execdriver"
-	"daemon/execdriver/native/template"
+	"github.com/hacking-thursday/sysd/daemon/execdriver"
+	"github.com/hacking-thursday/sysd/daemon/execdriver/native/template"
 	"github.com/docker/libcontainer"
 	"github.com/docker/libcontainer/apparmor"
 	"github.com/docker/libcontainer/devices"

@@ -22,7 +22,7 @@ import (
 	"text/template"
 	"time"
 
-	"api"
+	"github.com/hacking-thursday/sysd/api"
 	"github.com/docker/docker/dockerversion"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/graph"

@@ -14,7 +14,7 @@ import (
 	"sync"
 	"syscall"
 
-	"daemon/execdriver"
+	"github.com/hacking-thursday/sysd/daemon/execdriver"
 	"github.com/docker/docker/pkg/term"
 	"github.com/docker/libcontainer"
 	"github.com/docker/libcontainer/apparmor"

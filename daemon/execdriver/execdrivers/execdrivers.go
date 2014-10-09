@@ -2,9 +2,9 @@ package execdrivers
 
 import (
 	"fmt"
-	"daemon/execdriver"
-	"daemon/execdriver/lxc"
-	"daemon/execdriver/native"
+	"github.com/hacking-thursday/sysd/daemon/execdriver"
+	"github.com/hacking-thursday/sysd/daemon/execdriver/lxc"
+	"github.com/hacking-thursday/sysd/daemon/execdriver/native"
 	"github.com/docker/docker/pkg/sysinfo"
 	"path"
 )

@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"testing"
 
-	"daemon/graphdriver"
+	"github.com/hacking-thursday/sysd/daemon/graphdriver"
 )
 
 var (

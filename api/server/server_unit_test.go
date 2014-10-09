@@ -11,7 +11,7 @@ import (
 	"strings"
 	"testing"
 
-	"api"
+	"github.com/hacking-thursday/sysd/api"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/version"
 )

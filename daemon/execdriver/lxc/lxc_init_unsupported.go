@@ -2,7 +2,7 @@
 
 package lxc
 
-import "daemon/execdriver"
+import "github.com/hacking-thursday/sysd/daemon/execdriver"
 
 func setHostname(hostname string) error {
 	panic("Not supported on darwin")

@@ -5,7 +5,7 @@ package native
 import (
 	"fmt"
 
-	"daemon/execdriver"
+	"github.com/hacking-thursday/sysd/daemon/execdriver"
 )
 
 func NewDriver(root, initPath string) (execdriver.Driver, error) {

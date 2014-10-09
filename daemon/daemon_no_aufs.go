@@ -3,7 +3,7 @@
 package daemon
 
 import (
-	"daemon/graphdriver"
+	"github.com/hacking-thursday/sysd/daemon/graphdriver"
 )
 
 func migrateIfAufs(driver graphdriver.Driver, root string) error {
