@@ -16,17 +16,14 @@ build_all:
 	go get github.com/kr/pty
 	go get github.com/syndtr/gocapability/capability
 	go get github.com/tchap/go-patricia/patricia
+	# linking
+	mkdir -p $${GOPATH}/src/github.com/hacking-thursday/; cd $${GOPATH}/src/github.com/hacking-thursday/ ; ( ln -s ../../../../ sysd 2>/dev/null || true )
 	# check and patch
 	@if [ "`md5sum $${GOPATH}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go | cut -c-7`" = "4d0aedc" ]; then \
 		cp -v misc/apply_systemd.go $${GOPATH}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go; \
 	fi
 	# start build
-	#go build github.com/hacking-thursday/sysd/api/server ; go install github.com/hacking-thursday/sysd/api/server 
-	#go build github.com/hacking-thursday/sysd/api        ; go install github.com/hacking-thursday/sysd/api        
-	#go build github.com/hacking-thursday/sysd/builtins   ; go install github.com/hacking-thursday/sysd/builtins   
-	#go build github.com/hacking-thursday/sysd/daemon     ; go install github.com/hacking-thursday/sysd/daemon     
-	#go build github.com/hacking-thursday/sysd/mods       ; go install github.com/hacking-thursday/sysd/mods       
-	cd sysd; go build
+	cd sysd; 
 
 run:
 	DEBUG=1 sysd/sysd
