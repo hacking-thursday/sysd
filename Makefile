@@ -1,6 +1,6 @@
 
 build:
-	GOPATH=$$(pwd) TMPDIR="/tmp" $(MAKE) build_all
+	GOPATH="$$(pwd)/.gopath" TMPDIR="/tmp" $(MAKE) build_all
 
 build_all:
 	# deps for src/api
@@ -17,16 +17,16 @@ build_all:
 	go get github.com/syndtr/gocapability/capability
 	go get github.com/tchap/go-patricia/patricia
 	# check and patch
-	@if [ "`md5sum src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go | cut -c-7`" = "4d0aedc" ]; then \
-		cp -v misc/apply_systemd.go src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go; \
+	@if [ "`md5sum $${GOPATH}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go | cut -c-7`" = "4d0aedc" ]; then \
+		cp -v misc/apply_systemd.go $${GOPATH}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go; \
 	fi
 	# start build
-	cd src/api/server; go build; go install
-	cd src/api; go build; go install
-	cd src/builtins; go build; go install
-	cd src/daemon; go build; go install
-	cd src/mods; go build; go install
-	cd sysd/; go build
+	#go build github.com/hacking-thursday/sysd/api/server ; go install github.com/hacking-thursday/sysd/api/server 
+	#go build github.com/hacking-thursday/sysd/api        ; go install github.com/hacking-thursday/sysd/api        
+	#go build github.com/hacking-thursday/sysd/builtins   ; go install github.com/hacking-thursday/sysd/builtins   
+	#go build github.com/hacking-thursday/sysd/daemon     ; go install github.com/hacking-thursday/sysd/daemon     
+	#go build github.com/hacking-thursday/sysd/mods       ; go install github.com/hacking-thursday/sysd/mods       
+	cd sysd; go build
 
 run:
 	DEBUG=1 sysd/sysd

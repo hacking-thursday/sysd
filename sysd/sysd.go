@@ -1,8 +1,8 @@
 package main
 
 import (
-	"builtins"
-	"daemon"
+	"github.com/hacking-thursday/sysd/builtins"
+	"github.com/hacking-thursday/sysd/daemon"
 	"github.com/docker/docker/engine"
 	"log"
 )
