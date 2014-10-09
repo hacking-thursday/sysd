@@ -33,6 +33,9 @@ func osver(w http.ResponseWriter, r *http.Request, vars map[string]string) (err 
 		return
 	}
 
-	_, err = w.Write(out)
+	if _, err = w.Write(out); err != nil {
+		httpError(w, err)
+		return
+	}
 	return
 }

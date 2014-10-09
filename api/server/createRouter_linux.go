@@ -11,7 +11,9 @@ func createRouter_extos(r *mux.Router) {
 	)
 
 	m := map[string]map[string]HttpApiFunc{
-		"GET": {},
+		"GET": {
+			"/sysinfo": sysinfo,
+		},
 	}
 
 	for method, routes := range m {
