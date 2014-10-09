@@ -1,6 +1,7 @@
 package server
 
 import (
+	"net/http"
 	"testing"
 
 	"github.com/gorilla/mux"
@@ -37,4 +38,20 @@ func Test_parseAddr(t *testing.T) {
 
 	proto, addr, err = parseAddr("unix://0.0.0.0:8000")
 	assert.Error(err, "parseAddr")
+}
+
+func Test_marshal(t *testing.T) {
+	assert := assert.New(t)
+
+	req, err := http.NewRequest("GET", *flApiPrefix+"/memstats?pretty=1", nil)
+	assert.NoError(err, "http.NewRequest()")
+
+	b, err := marshal(req, req)
+	assert.Contains(string(b), "\t", "marshal pretty should contains <TAB>")
+
+	req, err = http.NewRequest("GET", *flApiPrefix+"/memstats", nil)
+	assert.NoError(err, "http.NewRequest()")
+
+	b, err = marshal(req, req)
+	assert.NotContains(string(b), "\t", "marshal should not contains <TAB>")
 }

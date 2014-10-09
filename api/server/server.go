@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"net"
 	"net/http"
@@ -67,7 +68,8 @@ func createRouter() (r *mux.Router, err error) {
 
 	m := map[string]map[string]HttpApiFunc{
 		"GET": {
-			"/ping": ping,
+			"/ping":     ping,
+			"/memstats": memstats,
 		},
 	}
 
@@ -149,4 +151,16 @@ func httpError(w http.ResponseWriter, err error) {
 		log.Errorf("HTTP Error: statusCode=%d %s", statusCode, err.Error())
 		http.Error(w, err.Error(), statusCode)
 	}
+}
+
+func marshal(r *http.Request, v interface{}) (b []byte, err error) {
+	var query = r.URL.Query()
+
+	if query.Get("pretty") == "1" {
+		b, err = json.MarshalIndent(v, "", "\t")
+	} else {
+		b, err = json.Marshal(v)
+	}
+
+	return
 }
