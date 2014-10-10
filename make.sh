@@ -23,6 +23,14 @@ function replace_sysd_dir(){
 if [ ! -d $TMPDIR ]; then mkdir -p $TMPDIR ; fi
 if [ ! -d $SYSDDIR ]; then mkdir -p $SYSDDIR ; fi
 
+if [ -L $SYSDDIR ];then 
+    echo -n -e "[Symbolic link]\t"; 
+    MESSAGE=" => $(readlink -f $SYSDDIR)";
+else
+    echo -n -e "[Mirror copy]\t"; 
+fi
+echo "$SYSDDIR $MESSAGE"
+
 if [ -d $SYSDDIR -a ! -L $SYSDDIR ] ;then
     cp -r $ROOT/* $SYSDDIR/
     pushd $SYSDDIR
