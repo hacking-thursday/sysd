@@ -11,14 +11,8 @@ import (
 	apiserver "github.com/hacking-thursday/sysd/api/server2"
 )
 
-func main() {
-	flag.Parse()
-
-	apiserver.ListenAndServe()
-
-	return
-
-	host := "127.0.0.1:4000"
+func runDaemonByDocker() {
+	host := "tcp://127.0.0.1:8080"
 
 	eng := engine.New()
 	if err := builtins.Register(eng); err != nil {
@@ -44,8 +38,24 @@ func main() {
 		}
 	}()
 
-	job := eng.Job("serveapi", "tcp://"+host)
+	job := eng.Job("serveapi", host)
 	if err := job.Run(); err != nil {
 		log.Fatal(err)
+	}
+}
+
+func runDaemonByKdTsai() {
+	apiserver.ListenAndServe()
+}
+
+func main() {
+	flag.Parse()
+
+	if *flBackend == "minimal" {
+		runDaemonByKdTsai()
+	} else if *flBackend == "docker" {
+		runDaemonByDocker()
+	} else {
+		runDaemonByKdTsai()
 	}
 }
