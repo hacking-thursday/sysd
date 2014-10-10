@@ -1,13 +1,23 @@
 package main
 
 import (
+	"github.com/docker/docker/engine"
 	"github.com/hacking-thursday/sysd/builtins"
 	"github.com/hacking-thursday/sysd/daemon"
-	"github.com/docker/docker/engine"
 	"log"
+
+	flag "github.com/docker/docker/pkg/mflag"
+
+	apiserver "github.com/hacking-thursday/sysd/api/server2"
 )
 
 func main() {
+	flag.Parse()
+
+	apiserver.ListenAndServe()
+
+	return
+
 	host := "127.0.0.1:4000"
 
 	eng := engine.New()
