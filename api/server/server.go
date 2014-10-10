@@ -11,9 +11,9 @@ import (
 	flag "github.com/docker/docker/pkg/mflag"
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"
-)
 
-type HttpApiFunc func(w http.ResponseWriter, r *http.Request, vars map[string]string) error
+	"github.com/hacking-thursday/sysd/mods"
+)
 
 var (
 	flApiAddr = flag.String(
@@ -80,7 +80,7 @@ func parseAddr(apiaddr string) (proto string, addr string, err error) {
 	return
 }
 
-func makeHttpHandler(localMethod string, localRoute string, handlerFunc HttpApiFunc) http.HandlerFunc {
+func makeHttpHandler(localMethod string, localRoute string, handlerFunc mods.HttpApiFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// log the request
 		log.Debugf("Calling %s %s", localMethod, localRoute)

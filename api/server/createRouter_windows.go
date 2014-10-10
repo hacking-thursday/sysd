@@ -3,20 +3,20 @@ package server
 import (
 	"github.com/docker/docker/pkg/log"
 	"github.com/gorilla/mux"
+
+	"github.com/hacking-thursday/sysd/mods"
 )
 
-func createRouter_extos(r *mux.Router) {
+func init() {
+	mods.Register("GET", "/osver", osver)
+}
+
+func createRouter_windows(r *mux.Router) {
 	var (
 		prefix = *flApiPrefix
 	)
 
-	m := map[string]map[string]HttpApiFunc{
-		"GET": {
-			"/osver": osver,
-		},
-	}
-
-	for method, routes := range m {
+	for method, routes := range mods.Modules {
 		for route, fct := range routes {
 			log.Debugf("Registering %s, %s", method, route)
 			// NOTE: scope issue, make sure the variables are local and won't be changed

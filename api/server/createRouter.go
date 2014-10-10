@@ -3,7 +3,14 @@ package server
 import (
 	"github.com/docker/docker/pkg/log"
 	"github.com/gorilla/mux"
+
+	"github.com/hacking-thursday/sysd/mods"
 )
+
+func init() {
+	mods.Register("GET", "/ping", ping)
+	mods.Register("GET", "/memstats", memstats)
+}
 
 func createRouter() (r *mux.Router, err error) {
 	var (
@@ -11,14 +18,7 @@ func createRouter() (r *mux.Router, err error) {
 	)
 	r = mux.NewRouter()
 
-	m := map[string]map[string]HttpApiFunc{
-		"GET": {
-			"/ping":     ping,
-			"/memstats": memstats,
-		},
-	}
-
-	for method, routes := range m {
+	for method, routes := range mods.Modules {
 		for route, fct := range routes {
 			log.Debugf("Registering %s, %s", method, route)
 			// NOTE: scope issue, make sure the variables are local and won't be changed
@@ -36,8 +36,6 @@ func createRouter() (r *mux.Router, err error) {
 			}
 		}
 	}
-
-	createRouter_extos(r)
 
 	return
 }
