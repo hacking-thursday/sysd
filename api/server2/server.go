@@ -10,9 +10,14 @@ import (
 	flag "github.com/docker/docker/pkg/mflag"
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"
+
+	"github.com/docker/docker/engine"
+	"github.com/docker/docker/pkg/version"
+
+	"github.com/hacking-thursday/sysd/mods"
 )
 
-type HttpApiFunc func(w http.ResponseWriter, r *http.Request, vars map[string]string) error
+type HttpApiFunc func(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error
 
 var (
 	flApiAddr = flag.String(
@@ -71,6 +76,18 @@ func createRouter() (r *mux.Router, err error) {
 		},
 	}
 
+	// beg 載入並註冊自定義的處理函式模組
+	for method, routes := range m {
+		routes2 := mods.Modules[method]
+		for route, fct := range routes2 {
+			if _, exists := routes[route]; exists {
+				continue
+			}
+			m[method][route] = HttpApiFunc(fct)
+		}
+	}
+	// end
+
 	for method, routes := range m {
 		for route, fct := range routes {
 			log.Debugf("Registering %s, %s", method, route)
@@ -119,7 +136,7 @@ func makeHttpHandler(localMethod string, localRoute string, handlerFunc HttpApiF
 		log.Debugf("Calling %s %s", localMethod, localRoute)
 		log.Infof("%s %s", r.Method, r.RequestURI)
 
-		if err := handlerFunc(w, r, mux.Vars(r)); err != nil {
+		if err := handlerFunc(nil, "", w, r, mux.Vars(r)); err != nil {
 			log.Errorf("Handler for %s %s returned error: %s", localMethod, localRoute, err)
 			httpError(w, err)
 		}

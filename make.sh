@@ -3,12 +3,13 @@
 set -e
 
 ROOT=$( readlink -f $( dirname $0 ) )
-export GOPATH="$ROOT/.gopath" 
+export GOPATH0="$ROOT/.gopath" 
+export GOPATH="$GOPATH:$GOPATH0" 
 export TMPDIR="$ROOT/.tmp" 
 export CGO_ENABLED="0" # 有效減少 dependencies
 export BuildTags='exclude_graphdriver_devicemapper exclude_graphdriver_aufs exclude_graphdriver_btrfs' # 有效減少 dependencies
 
-H4DIR="$GOPATH/src/github.com/hacking-thursday"
+H4DIR="$GOPATH0/src/github.com/hacking-thursday"
 SYSDDIR="$H4DIR/sysd"
 
 function replace_sysd_dir(){
@@ -34,7 +35,7 @@ echo "$SYSDDIR $MESSAGE"
 if [ -d $SYSDDIR -a ! -L $SYSDDIR ] ;then
     cp -r $ROOT/* $SYSDDIR/
     pushd $SYSDDIR
-        TARGET_PATH="${GOPATH}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go"
+        TARGET_PATH="${GOPATH0}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go"
 	if [ "`md5sum $TARGET_PATH | cut -c-7`" = "4d0aedc" ]; then 
 		cp -v $ROOT/misc/apply_systemd.go $TARGET_PATH
 	fi
@@ -49,10 +50,11 @@ if [ -L $SYSDDIR ];then
     # build first
     pushd $SYSDDIR/sysd
         go build -v -tags "$BuildTags"
-    popd
-
-    # test later
-    pushd $SYSDDIR
-        go test -v -tags "$BuildTags" ./...
+        if [ $? -eq 0 ];then
+            # test later
+            pushd $SYSDDIR
+                go test -v -tags "$BuildTags" ./...
+            popd
+        fi
     popd
 fi
