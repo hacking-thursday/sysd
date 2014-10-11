@@ -3,7 +3,13 @@ package server
 import (
 	"net/http"
 	"runtime"
+
+	"github.com/hacking-thursday/sysd/mods"
 )
+
+func init() {
+	mods.Register("GET", "/memstats", memstats)
+}
 
 func memstats(w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var (
@@ -12,13 +18,13 @@ func memstats(w http.ResponseWriter, r *http.Request, vars map[string]string) (e
 	)
 
 	runtime.ReadMemStats(&m)
-	if out, err = marshal(r, m); err != nil {
-		httpError(w, err)
+	if out, err = mods.Marshal(r, m); err != nil {
+		mods.HttpError(w, err)
 		return
 	}
 
 	if _, err = w.Write(out); err != nil {
-		httpError(w, err)
+		mods.HttpError(w, err)
 		return
 	}
 	return

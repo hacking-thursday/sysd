@@ -4,7 +4,13 @@ import (
 	"net/http"
 	"runtime"
 	"syscall"
+
+	"github.com/hacking-thursday/sysd/mods"
 )
+
+func init() {
+	mods.Register("GET", "/osver", osver)
+}
 
 func osver(w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var (
@@ -28,13 +34,13 @@ func osver(w http.ResponseWriter, r *http.Request, vars map[string]string) (err 
 	ov.Minor = uint8(ver >> 8)
 	ov.Build = uint16(ver >> 16)
 
-	if out, err = marshal(r, ov); err != nil {
-		httpError(w, err)
+	if out, err = mods.Marshal(r, ov); err != nil {
+		mods.HttpError(w, err)
 		return
 	}
 
 	if _, err = w.Write(out); err != nil {
-		httpError(w, err)
+		mods.HttpError(w, err)
 		return
 	}
 	return
