@@ -3,8 +3,16 @@
 set -e
 
 ROOT=$( readlink -f $( dirname $0 ) )
+
 export GOPATH0="$ROOT/.gopath" 
-export GOPATH="$GOPATH:$GOPATH0" 
+if [ -n "$GOPATH" ];then
+    # 若有預設的 GOPATH，就優先使用預設的 GOPATH 為主
+    export GOPATH="$GOPATH:$GOPATH0" 
+else
+    export GOPATH="$GOPATH0" 
+fi
+echo "GOPATH: $GOPATH"
+
 export TMPDIR="$ROOT/.tmp" 
 export CGO_ENABLED="0" # 有效減少 dependencies
 export BuildTags='exclude_graphdriver_devicemapper exclude_graphdriver_aufs exclude_graphdriver_btrfs' # 有效減少 dependencies
