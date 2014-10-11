@@ -8,8 +8,9 @@ import (
 )
 
 func init() {
-	mods.Register("GET", "/ping", ping)
-	mods.Register("GET", "/memstats", memstats)
+	//mods.Register("GET", "/ping", ping)
+	//mods.Register("GET", "/memstats", memstats)
+        // will be loaded in /mods/ subdirectories
 }
 
 func createRouter() (r *mux.Router, err error) {
