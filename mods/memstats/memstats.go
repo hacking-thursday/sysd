@@ -1,4 +1,4 @@
-package memstat
+package memstats
 
 import (
 	"encoding/json"
