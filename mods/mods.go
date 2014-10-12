@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/docker/docker/pkg/log"
-	"github.com/gorilla/mux"
+	"github.com/docker/docker/pkg/version"
 )
 
 var (
@@ -19,7 +19,7 @@ var (
 	}
 )
 
-type HttpApiFunc func(w http.ResponseWriter, r *http.Request, vars map[string]string) (err error)
+type HttpApiFunc func(engine interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error)
 
 func Register(method string, route string, fct HttpApiFunc) (err error) {
 	if _, exists := Modules[method][route]; exists {
@@ -29,19 +29,6 @@ func Register(method string, route string, fct HttpApiFunc) (err error) {
 
 	Modules[method][route] = fct
 	return
-}
-
-func makeHttpHandler(localMethod string, localRoute string, handlerFunc HttpApiFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		// log the request
-		log.Debugf("Calling %s %s", localMethod, localRoute)
-		log.Infof("%s %s", r.Method, r.RequestURI)
-
-		if err := handlerFunc(w, r, mux.Vars(r)); err != nil {
-			log.Errorf("Handler for %s %s returned error: %s", localMethod, localRoute, err)
-			HttpError(w, err)
-		}
-	}
 }
 
 func HttpError(w http.ResponseWriter, err error) {

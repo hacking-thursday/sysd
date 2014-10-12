@@ -14,7 +14,7 @@ func Test_createRouter(t *testing.T) {
 	)
 	assert := assert.New(t)
 
-	r, err = CreateRouter()
+	r, err = CreateRouter(nil)
 	assert.NotNil(r, "CreateRouter")
 	assert.NoError(err, "CreateRouter")
 }

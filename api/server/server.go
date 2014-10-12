@@ -22,7 +22,7 @@ var (
 	)
 )
 
-func ListenAndServe() (err error) {
+func ListenAndServe(eng interface{}) (err error) {
 	var (
 		l       net.Listener
 		r       *mux.Router
@@ -31,7 +31,7 @@ func ListenAndServe() (err error) {
 		addr    string
 	)
 
-	if r, err = mods.CreateRouter(); err != nil {
+	if r, err = mods.CreateRouter(eng); err != nil {
 		return
 	}
 

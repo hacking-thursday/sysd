@@ -13,7 +13,7 @@ import (
 func Test_memstats(t *testing.T) {
 	assert := assert.New(t)
 
-	router, err := mods.CreateRouter()
+	router, err := mods.CreateRouter(nil)
 	assert.NoError(err, "CreateRouter()")
 
 	req, err := mods.NewApiRequest("GET", "/memstats?pretty=1", nil)

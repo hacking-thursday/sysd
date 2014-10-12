@@ -13,7 +13,7 @@ import (
 func Test_sysinfo(t *testing.T) {
 	assert := assert.New(t)
 
-	router, err := mods.CreateRouter()
+	router, err := mods.CreateRouter(nil)
 	assert.NoError(err, "CreateRouter()")
 
 	req, err := mods.NewApiRequest("GET", "/sysinfo?pretty=1", nil)

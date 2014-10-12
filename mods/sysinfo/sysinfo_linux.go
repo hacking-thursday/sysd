@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"syscall"
 
+	"github.com/docker/docker/pkg/version"
+
 	"github.com/hacking-thursday/sysd/mods"
 )
 
@@ -11,7 +13,7 @@ func init() {
 	mods.Register("GET", "/sysinfo", sysinfo)
 }
 
-func sysinfo(w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func sysinfo(engine interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var (
 		out []byte
 

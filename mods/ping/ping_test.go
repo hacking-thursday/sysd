@@ -13,7 +13,7 @@ import (
 func Test_ping(t *testing.T) {
 	assert := assert.New(t)
 
-	router, err := mods.CreateRouter()
+	router, err := mods.CreateRouter(nil)
 	assert.NoError(err, "CreateRouter()")
 
 	req, err := mods.NewApiRequest("GET", "/ping", nil)

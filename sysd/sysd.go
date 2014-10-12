@@ -9,5 +9,5 @@ import (
 func main() {
 	flag.Parse()
 
-	apiserver.ListenAndServe()
+	apiserver.ListenAndServe(nil)
 }
