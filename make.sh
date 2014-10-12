@@ -44,9 +44,11 @@ if [ -d "$SYSDDIR" -a ! -L "$SYSDDIR" ] ;then
     cp -r "$ROOT"/* "$SYSDDIR/"
     pushd "$SYSDDIR"
         TARGET_PATH="${GOPATH0}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go"
-        grep -e 'theConn\.StartTransientUnit.*, nil);' "$TARGET_PATH"
-        if [ $? -eq 1 -a -f "$TARGET_PATH" ]; then
-            cp -v "$ROOT/misc/apply_systemd.go" "$TARGET_PATH"
+        if [ -f "$TARGET_PATH" ]; then
+            grep -e 'theConn\.StartTransientUnit.*, nil);' "$TARGET_PATH"
+            if [ $? -eq 1 ]; then
+                cp -v "$ROOT/misc/apply_systemd.go" "$TARGET_PATH"
+            fi
         fi
         go get -v -t -tags "$BuildTags" ./sysd
         if [ $? -eq 0 ];then
