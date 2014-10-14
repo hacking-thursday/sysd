@@ -5,7 +5,7 @@ import (
 
 	"github.com/hacking-thursday/sysd/api"
 	apiserver "github.com/hacking-thursday/sysd/api/server"
-	"github.com/hacking-thursday/sysd/daemon/networkdriver/bridge"
+	"github.com/docker/docker/daemon/networkdriver/bridge"
 	"github.com/docker/docker/dockerversion"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/events"

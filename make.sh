@@ -60,6 +60,7 @@ if [ -d "$SYSDDIR" -a ! -L "$SYSDDIR" ] ;then
     pushd "$SYSDDIR"
         do_patch "$ROOT/misc/001.patch" "${GOPATH0}/src/github.com/docker/libcontainer"
         do_patch "$ROOT/misc/002.patch" "${GOPATH0}/src/github.com/docker/docker"
+        do_patch "$ROOT/misc/003.patch" "${GOPATH0}/src/github.com/docker/docker"
         go get -v -t -tags "$BuildTags" ./sysd
         if [ $? -eq 0 ];then
             replace_sysd_dir

@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/docker/docker/engine"
 	"github.com/hacking-thursday/sysd/builtins"
-	"github.com/hacking-thursday/sysd/daemon"
+	"github.com/docker/docker/daemon"
 	"log"
 
 	flag "github.com/docker/docker/pkg/mflag"
@@ -24,6 +24,7 @@ func runDaemonByDocker() {
 		daemonCfg.InstallFlags()
 		daemonCfg.Pidfile = "/tmp/sysd.pid"
 		daemonCfg.Root = "/tmp"
+		daemonCfg.BridgeIface= "none"
 
 		d, err := daemon.NewDaemon(daemonCfg, eng)
 		if err != nil {
