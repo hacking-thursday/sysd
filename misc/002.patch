@@ -1,0 +1,31 @@
+diff --git a/daemon/execdriver/native/driver_unsupported_nocgo.go b/daemon/execdriver/native/driver_unsupported_nocgo.go
+index 2b8e9f8..ec701fd 100644
+--- a/daemon/execdriver/native/driver_unsupported_nocgo.go
++++ b/daemon/execdriver/native/driver_unsupported_nocgo.go
+@@ -8,6 +8,16 @@ import (
+ 	"github.com/docker/docker/daemon/execdriver"
+ )
+ 
++const (
++	DriverName = "native"
++	Version    = "0.2"
++)
++
++type driver struct {
++	root             string
++	initPath         string
++}
++
+ func NewDriver(root, initPath string) (execdriver.Driver, error) {
+ 	return nil, fmt.Errorf("native driver not supported on non-linux")
+ }
+diff --git a/daemon/execdriver/native/exec.go b/daemon/execdriver/native/exec.go
+index 0f7e5c0..0299f00 100644
+--- a/daemon/execdriver/native/exec.go
++++ b/daemon/execdriver/native/exec.go
+@@ -1,4 +1,4 @@
+-// +build linux
++// +build linux,cgo
+ 
+ package native
+ 

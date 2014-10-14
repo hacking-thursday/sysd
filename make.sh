@@ -29,6 +29,21 @@ function replace_sysd_dir(){
     popd > /dev/null
 }
 
+function do_patch(){
+    set +e
+
+    local PATCH_FILE="$1"
+    local TARGET_DIR="$2"
+
+    PATCH_OPTION="--force --batch -p1"
+    patch --dry-run $PATCH_OPTION -d "$TARGET_DIR" < "$PATCH_FILE" > /dev/null
+    if [ $? -eq 0 ]; then
+        patch $PATCH_OPTION -d "$TARGET_DIR" < "$PATCH_FILE"
+    fi
+
+    set -e
+}
+
 if [ ! -d "$TMPDIR" ]; then mkdir -p "$TMPDIR" ; fi
 if [ ! -d "$SYSDDIR" ]; then mkdir -p "$SYSDDIR" ; fi
 
@@ -43,13 +58,8 @@ echo "$SYSDDIR $MESSAGE"
 if [ -d "$SYSDDIR" -a ! -L "$SYSDDIR" ] ;then
     cp -r "$ROOT"/* "$SYSDDIR/"
     pushd "$SYSDDIR"
-        TARGET_PATH="${GOPATH0}/src/github.com/docker/libcontainer/cgroups/systemd/apply_systemd.go"
-        if [ -f "$TARGET_PATH" ]; then
-            grep -e 'theConn\.StartTransientUnit.*, nil);' "$TARGET_PATH"
-            if [ $? -eq 1 ]; then
-                cp -v "$ROOT/misc/apply_systemd.go" "$TARGET_PATH"
-            fi
-        fi
+        do_patch "$ROOT/misc/001.patch" "${GOPATH0}/src/github.com/docker/libcontainer"
+        do_patch "$ROOT/misc/002.patch" "${GOPATH0}/src/github.com/docker/docker"
         go get -v -t -tags "$BuildTags" ./sysd
         if [ $? -eq 0 ];then
             replace_sysd_dir
@@ -61,11 +71,11 @@ if [ -L "$SYSDDIR" ];then
     # build first
     pushd "$SYSDDIR/sysd"
         go build -v -tags "$BuildTags"
-        if [ $? -eq 0 ];then
-            # test later
-            pushd "$SYSDDIR"
-                go test -v -tags "$BuildTags" ./...
-            popd
-        fi
+        # if [ $? -eq 0 ];then
+        #     # test later
+        #     pushd "$SYSDDIR"
+        #         go test -v -tags "$BuildTags" ./...
+        #     popd
+        # fi
     popd
 fi
