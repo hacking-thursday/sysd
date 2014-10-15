@@ -6,15 +6,17 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/hacking-thursday/sysd/mods"
 )
 
 func Test_memstats(t *testing.T) {
 	assert := assert.New(t)
 
-	router, err := createRouter()
-	assert.NoError(err, "createRouter()")
+	router, err := mods.CreateRouter(nil)
+	assert.NoError(err, "CreateRouter()")
 
-	req, err := http.NewRequest("GET", *flApiPrefix+"/memstats?pretty=1", nil)
+	req, err := mods.NewApiRequest("GET", "/memstats?pretty=1", nil)
 	assert.NoError(err, "http.NewRequest()")
 
 	w := httptest.NewRecorder()

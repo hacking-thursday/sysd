@@ -1,3 +1,5 @@
+// +build docker
+
 package server
 
 import (
@@ -11,9 +13,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hacking-thursday/sysd/api"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/version"
+
+	"github.com/hacking-thursday/sysd/api"
 )
 
 func TestGetBoolParam(t *testing.T) {
