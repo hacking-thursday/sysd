@@ -2,8 +2,8 @@ package osver
 
 import (
 	"encoding/json"
-	"github.com/docker/docker/log"
-	"github.com/docker/docker/version"
+	"github.com/docker/docker/pkg/log"
+	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 	"net/http"
 	"runtime"
