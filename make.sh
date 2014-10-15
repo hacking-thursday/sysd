@@ -11,14 +11,16 @@ if [ -n "$GOPATH" ];then
 else
     export GOPATH="$GOPATH0" 
 fi
+export GOPATH9="$( echo $GOPATH | cut -d: -f1)" 
 echo "GOPATH: $GOPATH"
+echo "GOPATH0: $GOPATH0"
+echo "GOPATH9: $GOPATH9"
 
 export TMPDIR="$ROOT/.tmp" 
 export CGO_ENABLED="0" # 有效減少 dependencies
 export BuildTags="$BuildTags exclude_graphdriver_devicemapper exclude_graphdriver_aufs exclude_graphdriver_btrfs" # 有效減少 dependencies
 
-H4DIR="$GOPATH0/src/github.com/hacking-thursday"
-SYSDDIR="$H4DIR/sysd"
+SYSDDIR="$GOPATH0/src/github.com/hacking-thursday/sysd"
 
 function sync_sysd_dir(){
     if [ -d "$SYSDDIR" -o -L "$SYSDDIR" ] ;then
@@ -37,9 +39,11 @@ function do_patch(){
     local TARGET_DIR="$2"
 
     PATCH_OPTION="--force --batch -p1"
-    patch --dry-run $PATCH_OPTION -d "$TARGET_DIR" < "$PATCH_FILE" > /dev/null
-    if [ $? -eq 0 ]; then
-        patch $PATCH_OPTION -d "$TARGET_DIR" < "$PATCH_FILE"
+    if [ -d "$TARGET_DIR" ]; then
+        patch --dry-run $PATCH_OPTION -d "$TARGET_DIR" < "$PATCH_FILE" > /dev/null
+        if [ $? -eq 0 ]; then
+            patch $PATCH_OPTION -d "$TARGET_DIR" < "$PATCH_FILE"
+        fi
     fi
 
     set -e
@@ -50,9 +54,9 @@ if [ ! -d "$SYSDDIR" ]; then mkdir -p "$SYSDDIR" ; fi
 
 sync_sysd_dir
 pushd "$SYSDDIR"
-    do_patch "$ROOT/misc/001.patch" "${GOPATH0}/src/github.com/docker/libcontainer"
-    do_patch "$ROOT/misc/002.patch" "${GOPATH0}/src/github.com/docker/docker"
-    do_patch "$ROOT/misc/003.patch" "${GOPATH0}/src/github.com/docker/docker"
+    do_patch "$ROOT/misc/001.patch" "${GOPATH9}/src/github.com/docker/libcontainer"
+    do_patch "$ROOT/misc/002.patch" "${GOPATH9}/src/github.com/docker/docker"
+    do_patch "$ROOT/misc/003.patch" "${GOPATH9}/src/github.com/docker/docker"
     go get -v -t -tags "$BuildTags" ./sysd
     if [ $? -eq 0 ];then
         PASS_DEPS="ok"
