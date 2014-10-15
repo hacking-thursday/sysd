@@ -15,6 +15,7 @@ import (
 	"github.com/docker/docker/pkg/version"
 
 	"github.com/hacking-thursday/sysd/mods"
+	_ "github.com/hacking-thursday/sysd/mods/loader"
 )
 
 type HttpApiFunc func(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error
@@ -71,9 +72,10 @@ func createRouter() (r *mux.Router, err error) {
 	r = mux.NewRouter()
 
 	m := map[string]map[string]HttpApiFunc{
-		"GET": {
-			"/ping": ping,
-		},
+		"GET":     {},
+		"POST":    {},
+		"DELETE":  {},
+		"OPTIONS": {},
 	}
 
 	// beg 載入並註冊自定義的處理函式模組

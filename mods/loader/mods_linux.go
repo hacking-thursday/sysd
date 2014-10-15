@@ -1,4 +1,4 @@
-package server
+package loader
 
 import (
 	_ "github.com/hacking-thursday/sysd/mods/info2"
