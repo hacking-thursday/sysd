@@ -11,14 +11,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"
 
-	"github.com/docker/docker/engine"
-	"github.com/docker/docker/pkg/version"
-
 	"github.com/hacking-thursday/sysd/mods"
 	_ "github.com/hacking-thursday/sysd/mods/loader"
 )
-
-type HttpApiFunc func(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error
 
 var (
 	flApiAddr = flag.String(

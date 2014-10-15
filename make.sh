@@ -20,13 +20,14 @@ export BuildTags="$BuildTags exclude_graphdriver_devicemapper exclude_graphdrive
 H4DIR="$GOPATH0/src/github.com/hacking-thursday"
 SYSDDIR="$H4DIR/sysd"
 
-function replace_sysd_dir(){
-    pushd "$H4DIR" > /dev/null
-        if [ -d "./sysd" ]; then
-            rm -rf "./sysd"
-            ln -s ../../../../ ./sysd
-        fi
-    popd > /dev/null
+function sync_sysd_dir(){
+    if [ -d "$SYSDDIR" -o -L "$SYSDDIR" ] ;then
+        rm -rf "$SYSDDIR"
+    fi
+
+    echo "Syncing files: $ROOT => $SYSDDIR "
+    mkdir -p "$SYSDDIR"
+    cp -r "$ROOT"/* "$SYSDDIR/"
 }
 
 function do_patch(){
@@ -47,28 +48,18 @@ function do_patch(){
 if [ ! -d "$TMPDIR" ]; then mkdir -p "$TMPDIR" ; fi
 if [ ! -d "$SYSDDIR" ]; then mkdir -p "$SYSDDIR" ; fi
 
-if [ -L "$SYSDDIR" ];then 
-    echo -n -e "[Symbolic link]\t"; 
-    MESSAGE=" => $( cd $SYSDDIR && pwd -P )";
-else
-    echo -n -e "[Mirror copy]\t"; 
-fi
-echo "$SYSDDIR $MESSAGE"
+sync_sysd_dir
+pushd "$SYSDDIR"
+    do_patch "$ROOT/misc/001.patch" "${GOPATH0}/src/github.com/docker/libcontainer"
+    do_patch "$ROOT/misc/002.patch" "${GOPATH0}/src/github.com/docker/docker"
+    do_patch "$ROOT/misc/003.patch" "${GOPATH0}/src/github.com/docker/docker"
+    go get -v -t -tags "$BuildTags" ./sysd
+    if [ $? -eq 0 ];then
+        PASS_DEPS="ok"
+    fi
+popd
 
-if [ -d "$SYSDDIR" -a ! -L "$SYSDDIR" ] ;then
-    cp -r "$ROOT"/* "$SYSDDIR/"
-    pushd "$SYSDDIR"
-        do_patch "$ROOT/misc/001.patch" "${GOPATH0}/src/github.com/docker/libcontainer"
-        do_patch "$ROOT/misc/002.patch" "${GOPATH0}/src/github.com/docker/docker"
-        do_patch "$ROOT/misc/003.patch" "${GOPATH0}/src/github.com/docker/docker"
-        go get -v -t -tags "$BuildTags" ./sysd
-        if [ $? -eq 0 ];then
-            replace_sysd_dir
-        fi
-    popd
-fi
-
-if [ -L "$SYSDDIR" ];then
+if [ "$PASS_DEPS" = "ok" ];then
     # build first
     pushd "$SYSDDIR/sysd"
         go build -v -tags "$BuildTags"
