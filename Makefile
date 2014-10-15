@@ -1,6 +1,9 @@
 build:
 	./make.sh || true
 
+build2:
+	BuildTags="docker" ./make.sh || true
+
 run:
 	DEBUG=1 sysd/sysd
 

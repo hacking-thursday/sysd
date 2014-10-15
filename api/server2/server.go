@@ -71,7 +71,7 @@ func createRouter() (r *mux.Router, err error) {
 	)
 	r = mux.NewRouter()
 
-	m := map[string]map[string]HttpApiFunc{
+	m := map[string]map[string]mods.HttpApiFunc{
 		"GET":     {},
 		"POST":    {},
 		"DELETE":  {},
@@ -85,7 +85,7 @@ func createRouter() (r *mux.Router, err error) {
 			if _, exists := routes[route]; exists {
 				continue
 			}
-			m[method][route] = HttpApiFunc(fct)
+			m[method][route] = fct
 		}
 	}
 	// end
@@ -132,7 +132,7 @@ func parseAddr(apiaddr string) (proto string, addr string, err error) {
 	return
 }
 
-func makeHttpHandler(localMethod string, localRoute string, handlerFunc HttpApiFunc) http.HandlerFunc {
+func makeHttpHandler(localMethod string, localRoute string, handlerFunc mods.HttpApiFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// log the request
 		log.Debugf("Calling %s %s", localMethod, localRoute)

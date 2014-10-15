@@ -1,3 +1,5 @@
+// +build docker
+
 package net
 
 import (
@@ -19,7 +21,9 @@ func init() {
     mods.Register("GET", "/net", ifconfig)
 }
 
-func ifconfig(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
+func ifconfig(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
+    eng := eng_ifce.(*engine.Engine)
+
     eng.Register("ifconfig", func(job *engine.Job) engine.Status {
         outs := engine.NewTable("", 0)
         out := &engine.Env{}

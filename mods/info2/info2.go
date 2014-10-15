@@ -1,3 +1,5 @@
+// +build docker
+
 package info2
 
 import (
@@ -14,7 +16,9 @@ func init() {
 	mods.Register("GET", "/info2", getInfo2)
 }
 
-func getInfo2(eng *engine.Engine, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
+func getInfo2(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
+	eng := eng_ifce.(*engine.Engine)
+
 	eng.Register("my_cmd", func(job *engine.Job) engine.Status {
 		outs := engine.NewTable("", 0)
 

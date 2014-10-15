@@ -23,7 +23,6 @@ import (
 	"github.com/docker/libcontainer/user"
 	"github.com/gorilla/mux"
 
-	"github.com/hacking-thursday/sysd/api"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/listenbuffer"
 	"github.com/docker/docker/pkg/log"
@@ -33,6 +32,7 @@ import (
 	"github.com/docker/docker/pkg/version"
 	"github.com/docker/docker/registry"
 	"github.com/docker/docker/utils"
+	"github.com/hacking-thursday/sysd/api"
 	"github.com/hacking-thursday/sysd/mods"
 )
 
@@ -1178,7 +1178,7 @@ func ping(eng *engine.Engine, version version.Version, w http.ResponseWriter, r 
 	return err
 }
 
-func makeHttpHandler(eng *engine.Engine, logging bool, localMethod string, localRoute string, handlerFunc HttpApiFunc, enableCors bool, dockerVersion version.Version) http.HandlerFunc {
+func makeHttpHandler(eng *engine.Engine, logging bool, localMethod string, localRoute string, handlerFunc mods.HttpApiFunc, enableCors bool, dockerVersion version.Version) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// log the request
 		log.Debugf("Calling %s %s", localMethod, localRoute)
@@ -1244,58 +1244,11 @@ func createRouter(eng *engine.Engine, logging, enableCors bool, dockerVersion st
 	if os.Getenv("DEBUG") != "" {
 		AttachProfiler(r)
 	}
-	m := map[string]map[string]HttpApiFunc{
-		"GET": {
-			"/_ping":                          ping,
-			"/events":                         getEvents,
-			"/info":                           getInfo,
-			"/version":                        getVersion,
-			"/images/json":                    getImagesJSON,
-			"/images/viz":                     getImagesViz,
-			"/images/search":                  getImagesSearch,
-			"/images/get":                     getImagesGet,
-			"/images/{name:.*}/get":           getImagesGet,
-			"/images/{name:.*}/history":       getImagesHistory,
-			"/images/{name:.*}/json":          getImagesByName,
-			"/containers/ps":                  getContainersJSON,
-			"/containers/json":                getContainersJSON,
-			"/containers/{name:.*}/export":    getContainersExport,
-			"/containers/{name:.*}/changes":   getContainersChanges,
-			"/containers/{name:.*}/json":      getContainersByName,
-			"/containers/{name:.*}/top":       getContainersTop,
-			"/containers/{name:.*}/logs":      getContainersLogs,
-			"/containers/{name:.*}/attach/ws": wsContainersAttach,
-		},
-		"POST": {
-			"/auth":                         postAuth,
-			"/commit":                       postCommit,
-			"/build":                        postBuild,
-			"/images/create":                postImagesCreate,
-			"/images/load":                  postImagesLoad,
-			"/images/{name:.*}/push":        postImagesPush,
-			"/images/{name:.*}/tag":         postImagesTag,
-			"/containers/create":            postContainersCreate,
-			"/containers/{name:.*}/kill":    postContainersKill,
-			"/containers/{name:.*}/pause":   postContainersPause,
-			"/containers/{name:.*}/unpause": postContainersUnpause,
-			"/containers/{name:.*}/restart": postContainersRestart,
-			"/containers/{name:.*}/start":   postContainersStart,
-			"/containers/{name:.*}/stop":    postContainersStop,
-			"/containers/{name:.*}/wait":    postContainersWait,
-			"/containers/{name:.*}/resize":  postContainersResize,
-			"/containers/{name:.*}/attach":  postContainersAttach,
-			"/containers/{name:.*}/copy":    postContainersCopy,
-			"/containers/{name:.*}/exec":    postContainerExecCreate,
-			"/exec/{name:.*}/start":         postContainerExecStart,
-			"/exec/{name:.*}/resize":        postContainerExecResize,
-		},
-		"DELETE": {
-			"/containers/{name:.*}": deleteContainers,
-			"/images/{name:.*}":     deleteImages,
-		},
-		"OPTIONS": {
-			"": optionsHandler,
-		},
+	m := map[string]map[string]mods.HttpApiFunc{
+		"GET":     {},
+		"POST":    {},
+		"DELETE":  {},
+		"OPTIONS": {},
 	}
 
 	// beg 載入並註冊自定義的處理函式模組
@@ -1305,7 +1258,7 @@ func createRouter(eng *engine.Engine, logging, enableCors bool, dockerVersion st
 			if _, exists := routes[route]; exists {
 				continue
 			}
-			m[method][route] = HttpApiFunc(fct)
+			m[method][route] = fct
 		}
 	}
 	// end

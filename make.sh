@@ -15,7 +15,7 @@ echo "GOPATH: $GOPATH"
 
 export TMPDIR="$ROOT/.tmp" 
 export CGO_ENABLED="0" # 有效減少 dependencies
-export BuildTags='exclude_graphdriver_devicemapper exclude_graphdriver_aufs exclude_graphdriver_btrfs' # 有效減少 dependencies
+export BuildTags="$BuildTags exclude_graphdriver_devicemapper exclude_graphdriver_aufs exclude_graphdriver_btrfs" # 有效減少 dependencies
 
 H4DIR="$GOPATH0/src/github.com/hacking-thursday"
 SYSDDIR="$H4DIR/sysd"
