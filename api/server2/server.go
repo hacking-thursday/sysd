@@ -21,11 +21,6 @@ var (
 		env.GetString("SYSD_API_ADDR", "tcp://0.0.0.0:8080"),
 		"Sysd API Server Listen Address",
 	)
-	flApiPrefix = flag.String(
-		[]string{"-SYSD_API_PREFIX"},
-		env.GetString("SYSD_API_PREFIX", ""),
-		"Sysd API Server URL Prefix",
-	)
 )
 
 func ListenAndServe() (err error) {
@@ -33,7 +28,6 @@ func ListenAndServe() (err error) {
 		l       net.Listener
 		r       *mux.Router
 		apiaddr = *flApiAddr
-		prefix  = *flApiPrefix
 		proto   string
 		addr    string
 	)
@@ -54,16 +48,13 @@ func ListenAndServe() (err error) {
 		Addr:    addr,
 		Handler: r,
 	}
-	log.Infof("Listening for HTTP on %s (%s)", addr, prefix)
+	log.Infof("Listening for HTTP on %s", addr)
 	err = httpSrv.Serve(l)
 
 	return
 }
 
 func createRouter() (r *mux.Router, err error) {
-	var (
-		prefix = *flApiPrefix
-	)
 	r = mux.NewRouter()
 
 	m := map[string]map[string]mods.HttpApiFunc{
@@ -96,10 +87,12 @@ func createRouter() (r *mux.Router, err error) {
 			// build the handler function
 			f := makeHttpHandler(localMethod, localRoute, localFct)
 
-			if prefix == "" {
-				r.Path(localRoute).Methods(localMethod).HandlerFunc(f)
+			// add the new route
+			if localRoute == "" {
+				r.Methods(localMethod).HandlerFunc(f)
 			} else {
-				r.PathPrefix(prefix).Path(localRoute).Methods(localMethod).HandlerFunc(f)
+				r.Path("/v{version:[0-9.]+}" + localRoute).Methods(localMethod).HandlerFunc(f)
+				r.Path(localRoute).Methods(localMethod).HandlerFunc(f)
 			}
 		}
 	}
