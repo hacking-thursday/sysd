@@ -61,7 +61,7 @@ popd
 
 if [ "$PASS_DEPS" = "ok" ];then
     # build first
-    pushd "$SYSDDIR/sysd"
+    pushd "$ROOT/sysd"
         go build -v -tags "$BuildTags"
         # if [ $? -eq 0 ];then
         #     # test later
