@@ -7,7 +7,7 @@ import (
 )
 
 func runDaemonByKdTsai() {
-	apiserver.ListenAndServe()
+	apiserver.ListenAndServe(nil)
 }
 
 func main() {

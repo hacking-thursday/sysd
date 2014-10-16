@@ -3,21 +3,8 @@ package server2
 import (
 	"testing"
 
-	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 )
-
-func Test_createRouter(t *testing.T) {
-	var (
-		err error
-		r   *mux.Router
-	)
-	assert := assert.New(t)
-
-	r, err = createRouter()
-	assert.NotNil(r, "createRouter")
-	assert.NoError(err, "createRouter")
-}
 
 func Test_parseAddr(t *testing.T) {
 	var (

@@ -6,16 +6,18 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/hacking-thursday/sysd/mods"
 )
 
 func Test_sysinfo(t *testing.T) {
 	assert := assert.New(t)
 
-	router, err := createRouter()
-	assert.NoError(err, "createRouter()")
+	router, err := mods.CreateRouter(nil)
+	assert.NoError(err, "CreateRouter()")
 
-	req, err := http.NewRequest("GET", *flApiPrefix+"/sysinfo?pretty=1", nil)
-	assert.NoError(err, "http.NewRequest()")
+	req, err := mods.NewApiRequest("GET", "/sysinfo?pretty=1", nil)
+	assert.NoError(err, "NewApiRequest()")
 
 	w := httptest.NewRecorder()
 	router.ServeHTTP(w, req)
