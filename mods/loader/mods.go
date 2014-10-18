@@ -7,4 +7,5 @@ import (
 	_ "github.com/hacking-thursday/sysd/mods/memstats"
 	_ "github.com/hacking-thursday/sysd/mods/sample"
 	_ "github.com/hacking-thursday/sysd/mods/route"
+	_ "github.com/hacking-thursday/sysd/mods/arp"
 )
