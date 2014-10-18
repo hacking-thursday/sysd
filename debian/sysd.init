@@ -10,8 +10,7 @@
 ### END INIT INFO
 
 NAME=sysd
-PIDFILE=/tmp/$NAME.pid
-DAEMON=/home/yan/go/src/github.com/hacking-thursday/sysd/sysd/sysd
+DAEMON=/usr/bin/sysd
 
 do_start () {
         start-stop-daemon --start --background --quiet --exec $DAEMON
