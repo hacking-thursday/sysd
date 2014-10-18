@@ -26,10 +26,10 @@ func net_io_counters() (iface_counter_map map[string] Counters) {
             counter.PacketsRecv, _ = strconv.Atoi(list_a[3])
             counter.Errin, _        = strconv.Atoi(list_a[4])
             counter.Dropin, _       = strconv.Atoi(list_a[5])
-            counter.BytesSent, _   = strconv.Atoi(list_a[9])
-            counter.PacketsSent, _ = strconv.Atoi(list_a[10])
-            counter.Errout, _       = strconv.Atoi(list_a[11])
-            counter.Dropout, _      = strconv.Atoi(list_a[12])
+            counter.BytesSent, _   = strconv.Atoi(list_a[10])
+            counter.PacketsSent, _ = strconv.Atoi(list_a[11])
+            counter.Errout, _       = strconv.Atoi(list_a[12])
+            counter.Dropout, _      = strconv.Atoi(list_a[13])
 
             iface_counter_map[list_a[1]] = counter
 //            fmt.Println(list_a[1])
