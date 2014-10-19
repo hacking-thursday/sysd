@@ -4,6 +4,8 @@ package route
 
 import (
 	"bufio"
+	"encoding/hex"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -16,6 +18,11 @@ import (
 func init() {
 	log.Debugf("Initializing module...")
 	mods.Register("GET", "/route", handler)
+}
+
+func hex_to_ip(input string) string {
+	a, _ := hex.DecodeString(input)
+	return fmt.Sprintf("%v.%v.%v.%v", a[3], a[2], a[1], a[0])
 }
 
 func handler(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
@@ -44,9 +51,12 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		for ii := 0; ii < len(fields); ii++ {
 			key := header[ii]
 			val := fields[ii]
-                        row[key] = val
+			if key == "Destination" || key == "Gateway" || key == "Mask" {
+				val = hex_to_ip(val)
+			}
+			row[key] = val
 		}
-                result = append( result, row )
+		result = append(result, row)
 	}
 
 	if out, err = mods.Marshal(r, result); err != nil {
