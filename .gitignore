@@ -10,6 +10,7 @@ src/code.google.com/
 src/github.com/
 sysd/sysd
 .gopath
+sysd.wiki/
 
 # Architecture specific extensions/prefixes
 *.[568vq]
