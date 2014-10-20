@@ -48,6 +48,7 @@ func Marshal(r *http.Request, v interface{}) (b []byte, err error) {
 
 	if query.Get("pretty") == "1" {
 		b, err = json.MarshalIndent(v, "", "\t")
+		b = append(b, '\n')
 	} else {
 		b, err = json.Marshal(v)
 	}
