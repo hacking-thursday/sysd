@@ -13,7 +13,7 @@ build2:
 	BuildTags="docker" ./make.sh || true
 
 run:
-	DEBUG=1 sysd/sysd
+	DEBUG=1 SYSD_UI_DIR="$$(pwd)/mods/ui/files" sysd/sysd
 
 run2:
 	DEBUG=1 sysd/sysd --SYSD_BACKEND="docker"
