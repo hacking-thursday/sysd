@@ -3,11 +3,11 @@
 package sysfs
 
 import (
-	"path/filepath"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
+	"path/filepath"
 
 	"github.com/docker/docker/pkg/log"
 	"github.com/docker/docker/pkg/version"
@@ -58,7 +58,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		}
 	}
 
-        subdir := "dev"
+	subdir := "dev"
 	target_path = "/sys/" + subdir
 	result[subdir] = TreeNode{}
 
@@ -86,6 +86,42 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 						result[subdir].(TreeNode)[key1].(TreeNode)[key2] = row
 					}
 				}
+			}
+		}
+	}
+
+	subdir = "bus"
+	target_path = "/sys/" + subdir
+	result[subdir] = TreeNode{}
+
+	d_pathes, err = ioutil.ReadDir(target_path)
+	if err == nil {
+		for i := 0; i < len(d_pathes); i++ {
+			key1 := d_pathes[i].Name()
+
+			devices, _ := ioutil.ReadDir(path.Join(target_path, key1, "devices"))
+			drivers, _ := ioutil.ReadDir(path.Join(target_path, key1, "drivers"))
+
+			if _, ok := result[subdir].(TreeNode)[key1]; !ok {
+				result[subdir].(TreeNode)[key1] = TreeNode{}
+			}
+
+			if _, ok := result[subdir].(TreeNode)[key1].(TreeNode)["drivers"]; !ok {
+				result[subdir].(TreeNode)[key1].(TreeNode)["drivers"] = TreeNode{}
+			}
+
+			if _, ok := result[subdir].(TreeNode)[key1].(TreeNode)["devices"]; !ok {
+				result[subdir].(TreeNode)[key1].(TreeNode)["devices"] = TreeNode{}
+			}
+
+			for j := 0; j < len(drivers); j++ {
+				key2 := drivers[j].Name()
+				result[subdir].(TreeNode)[key1].(TreeNode)["drivers"].(TreeNode)[key2] = TreeNode{}
+			}
+
+			for j := 0; j < len(devices); j++ {
+				key2 := devices[j].Name()
+				result[subdir].(TreeNode)[key1].(TreeNode)["devices"].(TreeNode)[key2] = TreeNode{}
 			}
 		}
 	}
