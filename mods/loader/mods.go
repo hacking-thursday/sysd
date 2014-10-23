@@ -9,4 +9,5 @@ import (
 	_ "github.com/hacking-thursday/sysd/mods/route"
 	_ "github.com/hacking-thursday/sysd/mods/arp"
 	_ "github.com/hacking-thursday/sysd/mods/ui"
+	_ "github.com/hacking-thursday/sysd/mods/battery"
 )
