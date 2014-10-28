@@ -11,7 +11,8 @@ import (
     "strconv"
 )
 
-type bat struct {
+type Battery struct {
+    Name string
     Capacity int
 }
 
@@ -19,24 +20,53 @@ var myregexp = regexp.MustCompile(`(\w+)=(\w+)`)
 
 func init() {
     log.Debugf("Initializing module...")
-    mods.Register("GET", "/battery", get_battery)
+    mods.Register("GET", "/battery", get_batterys)
 }
 
-func get_battery(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
-    ra, _ := ioutil.ReadFile("/sys/class/power_supply/BAT0/uevent")
+func get_battery_names() []string {
+    var batterys []string
+    r, _ := regexp.Compile("BAT.*")
+
+    list, _ := ioutil.ReadDir("/sys/class/power_supply/")
+
+    for _, dir := range list {
+        if r.MatchString(dir.Name()) {
+            batterys = append(batterys, dir.Name())
+        }
+    }
+
+    return batterys
+}
+
+func get_battery_detail(name string) (Battery) {
+    battery := Battery{}
+    battery.Name = name
+
+    path := "/sys/class/power_supply/" + name + "/uevent"
+
+    ra, _ := ioutil.ReadFile(path)
     list := strings.Split(strings.TrimSpace(string(ra)),"\n")
-	var output []byte
-    bat_info := bat{}
 
     for _, value := range list {
         list_a := myregexp.FindStringSubmatch(strings.TrimSpace(value))
 
         if(list_a[1] == "POWER_SUPPLY_CAPACITY") {
-            bat_info.Capacity, _ = strconv.Atoi(list_a[2])
+            battery.Capacity, _ = strconv.Atoi(list_a[2])
         }
     }
 
-	if output, err = mods.Marshal(r, bat_info); err != nil {
+    return battery
+}
+
+func get_batterys(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+	var output []byte
+    var batterys []Battery
+
+    for _, name := range get_battery_names() {
+        batterys = append(batterys, get_battery_detail(name))
+    }
+
+	if output, err = mods.Marshal(r, batterys); err != nil {
 		mods.HttpError(w, err)
 		return
 	}
