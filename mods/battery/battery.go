@@ -16,8 +16,6 @@ type Battery struct {
     Capacity int
 }
 
-var myregexp = regexp.MustCompile(`(\w+)=(\w+)`)
-
 func init() {
     log.Debugf("Initializing module...")
     mods.Register("GET", "/battery", get_batterys)
@@ -41,6 +39,7 @@ func get_battery_names() []string {
 func get_battery_detail(name string) (Battery) {
     battery := Battery{}
     battery.Name = name
+    var myregexp = regexp.MustCompile(`(\w+)=(\w+)`)
 
     path := "/sys/class/power_supply/" + name + "/uevent"
 
