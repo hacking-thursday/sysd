@@ -8,12 +8,21 @@ import (
     "io/ioutil"
     "regexp"
     "strings"
-    "strconv"
+    "bytes"
 )
 
-type Battery struct {
-    Name string
-    Capacity int
+func MakeFirstUpperCase(s string) string {
+
+    if len(s) < 2 {
+        return strings.ToUpper(s)
+    }
+
+    bts := []byte(strings.ToLower(s))
+
+    lc := bytes.ToUpper([]byte{bts[0]})
+    rest := bts[1:]
+
+    return string(bytes.Join([][]byte{lc, rest}, nil))
 }
 
 func init() {
@@ -36,10 +45,9 @@ func get_battery_names() []string {
     return batterys
 }
 
-func get_battery_detail(name string) (Battery) {
-    battery := Battery{}
-    battery.Name = name
-    var myregexp = regexp.MustCompile(`(\w+)=(\w+)`)
+func get_battery_detail(name string) (map[string]string) {
+    var battery = make(map[string]string)
+    var myregexp = regexp.MustCompile(`POWER_SUPPLY_(.*)=(.*)`)
 
     path := "/sys/class/power_supply/" + name + "/uevent"
 
@@ -49,9 +57,15 @@ func get_battery_detail(name string) (Battery) {
     for _, value := range list {
         list_a := myregexp.FindStringSubmatch(strings.TrimSpace(value))
 
-        if len(list_a) == 3 && list_a[1] == "POWER_SUPPLY_CAPACITY" {
-            battery.Capacity, _ = strconv.Atoi(list_a[2])
+        /* make property name "MODEL_NAME" -> "ModelName" */
+        var key_name_split = strings.Split(list_a[1], "_")
+        var key_name string
+        for _, value := range key_name_split {
+            key_name = key_name + MakeFirstUpperCase(value)
         }
+        /* make property name "MODEL_NAME" -> "ModelName" */
+
+        battery[key_name] = list_a[2]
     }
 
     return battery
@@ -59,7 +73,7 @@ func get_battery_detail(name string) (Battery) {
 
 func get_batterys(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var output []byte
-    var batterys []Battery
+    var batterys []map[string]string
 
     for _, name := range get_battery_names() {
         batterys = append(batterys, get_battery_detail(name))
