@@ -49,7 +49,7 @@ func get_battery_detail(name string) (Battery) {
     for _, value := range list {
         list_a := myregexp.FindStringSubmatch(strings.TrimSpace(value))
 
-        if(list_a[1] == "POWER_SUPPLY_CAPACITY") {
+        if len(list_a) == 3 && list_a[1] == "POWER_SUPPLY_CAPACITY" {
             battery.Capacity, _ = strconv.Atoi(list_a[2])
         }
     }
