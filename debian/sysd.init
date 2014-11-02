@@ -10,14 +10,19 @@
 ### END INIT INFO
 
 NAME=sysd
+PIDFILE=/var/run/$NAME.pid
 DAEMON=/usr/bin/sysd
 
 do_start () {
-        start-stop-daemon --start --background --quiet --exec $DAEMON
+	echo -n "Starting daemon: "$NAME
+	start-stop-daemon --start --quiet -m --pidfile $PIDFILE --background --exec $DAEMON
+	echo "."
 }
 
 do_stop () {
-        start-stop-daemon --stop --quiet --oknodo --retry=TERM/30/KILL/5 --exec $DAEMON
+	echo -n "Stopping daemon: "$NAME
+	start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+	echo "."
 }
 
 case "$1" in
