@@ -10,7 +10,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/docker/docker/pkg/log"
+	log "github.com/Sirupsen/logrus"
 	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 )
