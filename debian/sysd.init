@@ -11,7 +11,7 @@
 
 NAME=sysd
 PIDFILE=/var/run/$NAME.pid
-DAEMON=/usr/bin/sysd
+DAEMON=/usr/sbin/sysd
 
 do_start () {
 	echo -n "Starting daemon: "$NAME
