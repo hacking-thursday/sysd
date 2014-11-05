@@ -10,18 +10,25 @@ HTTP API. With sysd, application and plugin developers are able to save their
 works from parsing variant output from low-level unix command tools, and
 dependencies.
 
+## Installation
 
-## Build sysd with docker
+### Build sysd with docker
 
 ```
 git clone https://github.com/hacking-thursday/sysd
 cd sysd
 sudo docker build -t sysd .
-sudo docker run -p 80:8080 sysd
+sudo docker run -p 8080:8080 sysd
 ```
 
-## Get sysd from docker image
+### Get sysd from docker image
 
 ```
 sudo docker run -v "$PWD:/dist" sysd cp /usr/local/bin/sysd /dist
+```
+
+## Usage
+
+```
+curl http://<host>:8080/apilist
 ```
