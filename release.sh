@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
+#
+# Get the latest version from the git tag
+#
 get_latest_ver(){
     git tag --sort=-refname | head -1 | cut -c2-
 }
 
+#
+# make the tarball with the specified version
+# TODO: try to migrate this to `make dist`
+#
 make_tarball(){
     local ver="$1"
     local out="$2"
@@ -11,6 +18,10 @@ make_tarball(){
     git archive --format=tar.gz --output=$out --prefix=sysd-$ver/ "v${ver}"
 }
 
+#
+# make the tarball with the specified version
+# TODO: draft, and should be improved
+#
 make_deb_pkg(){
     local tarball="$1"
 
@@ -28,7 +39,7 @@ make_deb_pkg(){
                   --exclude="*/testdata/*" \
                   --exclude="hacking-thursday/sysd" \
                   -C .gopath -f "/tmp/deps.tar.gz" .
-        install -d "$srcdir/.gopath" 
+        install -d "$srcdir/.gopath"
         tar -zxvf "/tmp/deps.tar.gz" -C "$srcdir/.gopath"
         pushd "$srcdir"
             debuild -S
@@ -37,7 +48,5 @@ make_deb_pkg(){
 }
 
 version=$( get_latest_ver )
-
 make_tarball "$version" "sysd_$version.orig.tar.gz"
-
 make_deb_pkg "sysd_$version.orig.tar.gz"
