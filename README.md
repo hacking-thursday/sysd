@@ -17,6 +17,7 @@ dependencies.
 git clone https://github.com/hacking-thursday/sysd
 cd sysd
 sudo docker build -t sysd .
+sudo docker run -p 80:8080 sysd
 ```
 
 ## Get sysd from docker image
