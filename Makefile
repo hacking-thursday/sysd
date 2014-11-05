@@ -15,19 +15,7 @@ run2:
 test:
 	env
 
-setup_init_script: check_root
-	@if [ ! -f "/etc/init.d/sysd" ]; then \
-		ln -s $(PWD)/debian/sysd.init /etc/init.d/sysd; \
-	fi
-	update-rc.d sysd defaults
-
-check_root:
-	@if [ $(shell id -u) -ne 0 ]; then \
-		echo "This script must be run as root"; \
-		exit 1; \
-	fi
-
-install: check_root setup_init_script
+install:
 	## @if [ ! -f "/usr/bin/sysd" ]; then \
 	## 	ln -s $(PWD)/sysd/sysd /usr/bin/sysd; \
 	## fi
