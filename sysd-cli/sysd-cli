@@ -1,0 +1,109 @@
+#!/usr/bin/env python
+# coding=utf8
+#
+
+from __future__ import print_function
+import argparse
+import json
+import sys
+
+# 檢查是否是 python3
+def is_python3():                                                                                                  
+        major_version = sys.version_info[0]
+        if major_version == 3:
+                return True
+        else:
+                return False
+
+if is_python3():
+    import urllib.request
+else:
+    import urllib
+
+
+APIURL="http://127.0.0.1:8080"
+
+
+class RESTReq():
+    api_url = ""
+    ret_code = ""
+    ret_data = ""
+
+    def __init__(self, url ):
+        self.api_url = url
+
+    def GET(self, api_path ):
+        try:
+            if is_python3():
+                ret = urllib.request.urlopen(self.api_url + api_path)
+                res = {}
+                res["ret_code"] = ret.getcode()
+                if res["ret_code"] == 200:
+                    res["ret_data"] = ret.readall().decode('utf8')
+                else:
+                    res["ret_data"] = None
+            else:
+                ret = urllib.urlopen(self.api_url + api_path)
+                res = {}
+                res["ret_code"] = ret.getcode()
+                if res["ret_code"] == 200:
+                    res["ret_data"] = ret.read()
+                else:
+                    res["ret_data"] = None
+
+
+        except:
+            res = { "ret_code": 404, "ret_data":None }
+
+        return res
+
+
+def cmd_ifconfig(args):
+    global APIURL
+
+    result = RESTReq(APIURL).GET("/ifconfig")
+    if args.debug:
+        print(result)
+
+    ret_code = result["ret_code"]
+    ret_data = result["ret_data"]
+
+    if ret_code == 200:
+        data = json.loads(ret_data)
+
+        for item in data:
+            if item["Name"] in args.params or args.params.__len__() == 0 :
+                print( item["Name"].ljust(10," "), "Link encap:Ethernet" ,"HWaddr "+ item["HwAddr"]   )
+                print( "          ".ljust(10," "), "UP BROADCAST MULTICAST  MTU:"+str(item["MTU"])+"  Metric:1" )
+                print( "          ".ljust(10," "), "RX packets:"+ str(item["Counters"]["PacketsRecv"])+" errors:"+str(item["Counters"]["Errin"]) +" dropped:"+str(item["Counters"]["Dropin"])+" overruns:0 frame:0" )
+                print( "          ".ljust(10," "), "TX packets:"+ str(item["Counters"]["PacketsSent"])+" errors:"+str(item["Counters"]["Errout"])+" dropped:"+str(item["Counters"]["Dropout"])+" overruns:0 carrier:0" )
+                print( "          ".ljust(10," "), "collisions:0 txqueuelen:1000 " )
+                print( "          ".ljust(10," "), "RX bytes:"+ str(item["Counters"]["BytesRecv"])+"          TX bytes:"+str(item["Counters"]["BytesRecv"])+"        " )
+                print( "          ".ljust(10," "), "Interrupt:20 Memory:f2600000-f2620000 " )
+                print("")
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcmd')
+
+    # 通用選項
+    parser.add_argument('-n', '--dry-run', help='跳過會寫入的動作', dest='dryrun', action='store_true')
+    parser.add_argument('-v', '--verbose', help='顯示更詳細的訊息', dest='verbose', action='store_true')
+    parser.add_argument('-d', '--debug', help='打開除錯訊息', dest='debug', action='store_true')
+
+    # sub command for "search"
+    parser_sub = subparsers.add_parser('ifconfig', help='')
+    parser_sub.add_argument('params', nargs='*', help='')
+    parser_sub.set_defaults(func=cmd_ifconfig)
+
+    args = parser.parse_args()
+    #print args; exit()
+    if args.debug:
+        print(args)
+
+    if args.__contains__("func"):
+        args.func(args)
+
+    else:
+        parser.print_help()
