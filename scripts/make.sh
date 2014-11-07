@@ -2,7 +2,7 @@
 
 set -e
 
-ROOT="$( cd $( dirname $0 ) && pwd -P )"
+ROOT="$( cd $( dirname $0 ) && pwd -P )/.."
 VENDOR="$ROOT/vendor"
 
 export GOPATH0="$ROOT/.gopath" 

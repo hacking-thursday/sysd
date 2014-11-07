@@ -1,10 +1,10 @@
 PWD=$(shell pwd)
 
 build:
-	./make.sh || true
+	./scripts/make.sh || true
 
 build2:
-	BuildTags="docker" ./make.sh || true
+	BuildTags="docker" ./scripts/make.sh || true
 
 run:
 	DEBUG=1 SYSD_UI_DIR="$$(pwd)/mods/ui/files" sysd/sysd
