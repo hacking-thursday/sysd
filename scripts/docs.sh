@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
+ROOT="$( cd $( dirname $0 ) && pwd -P )/.."
+VENDOR="$ROOT/vendor"
+
 SYSD_WIKI_URL="http://github.com/hacking-thursday/sysd/wiki"
-SYSD_WIKI_DIR="./sysd.wiki"
+SYSD_WIKI_DIR="$ROOT/sysd.wiki"
 
 function list_files(){
-    find mods/ -type f | xargs grep Register | cut -d: -f1 | sort | uniq | grep -v '_test'
+    find "$ROOT/mods/" -type f | xargs grep Register | cut -d: -f1 | sort | uniq | grep -v '_test'
 }
 
 function parse_file(){
