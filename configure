@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+ROOT="$( cd $( dirname $0 ) && pwd -P )"
+VENDOR="$ROOT/vendor"
+
+PACKAGE_NAME='sysd'
+PACKAGE_VERSION=$( cat $ROOT/VERSION )
+
+pushd "$ROOT" > /dev/null
+    test -d $VENDOR || $ROOT/scripts/vendor.sh
+    test -d $VENDOR && PASS_DEPS="ok"
+popd > /dev/null

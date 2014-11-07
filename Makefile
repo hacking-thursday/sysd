@@ -15,6 +15,10 @@ run2:
 test:
 	env
 
+clean:
+	rm -rf .gopath || true
+	rm -rf .tmp || true
+
 install:
 	## @if [ ! -f "/usr/bin/sysd" ]; then \
 	## 	ln -s $(PWD)/sysd/sysd /usr/bin/sysd; \
