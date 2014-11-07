@@ -73,3 +73,6 @@ clone git 3afe9db github.com/docker/docker
 do_patch "$ROOT/misc/001.patch" "$VENDOR/src/github.com/docker/libcontainer"
 do_patch "$ROOT/misc/002.patch" "$VENDOR/src/github.com/docker/docker"
 do_patch "$ROOT/misc/003.patch" "$VENDOR/src/github.com/docker/docker"
+
+rm -r "$VENDOR/src/github.com/docker/docker/docs"
+rm -r "$VENDOR/src/github.com/docker/docker/vendor"

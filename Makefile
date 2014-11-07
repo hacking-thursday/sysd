@@ -18,9 +18,18 @@ test:
 clean:
 	rm -rf .gopath || true
 	rm -rf .tmp || true
+	rm -rf sysd/sysd || true
+
+Manifest:
+	find . -type f | grep -v -e "^\./\.git" > Manifest
+
+dist: Manifest
+	./scripts/tarball.sh || true
 
 install:
 	## @if [ ! -f "/usr/bin/sysd" ]; then \
 	## 	ln -s $(PWD)/sysd/sysd /usr/bin/sysd; \
 	## fi
 	install -D --mode=0644 sysd/sysd $(DESTDIR)/usr/sbin/sysd
+
+.PHONY: clean
