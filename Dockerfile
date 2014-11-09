@@ -1,11 +1,5 @@
-FROM ubuntu:14.04
-
-RUN echo "deb http://ppa.launchpad.net/matlinuxer2/sysd/ubuntu trusty main" >> /etc/apt/sources.list
-RUN echo "deb-src http://ppa.launchpad.net/matlinuxer2/sysd/ubuntu trusty main" >> /etc/apt/sources.list
-
-RUN apt-get update
-RUN apt-get install -y --force-yes sysd
-
-EXPOSE 8080
-
-ENTRYPOINT ["/usr/sbin/sysd"]
+FROM golang:1.3.3
+WORKDIR /go/src/github.com/hacking-thursday/sysd
+ADD . /go/src/github.com/hacking-thursday/sysd
+RUN cd sysd && go get -v && go test -v && go build -v
+RUN cp sysd/sysd /usr/local/bin
