@@ -20,10 +20,10 @@ clean:
 	rm -rf .tmp || true
 	rm -rf sysd/sysd || true
 
-Manifest:
+Manifest: clean
 	find . -type f | grep -v -e "^\./\.git" | sort | uniq > Manifest
 
-dist: Manifest
+dist:
 	./scripts/tarball.sh || true
 
 install:

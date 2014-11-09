@@ -19,9 +19,10 @@ mkdir -p "$PKGDIR"
 mkdir -p "$TGZDIR"
 pushd $ROOT > /dev/null
     for ff in `cat Manifest`;do
-        cp -av --parents "$ff" "$PKGDIR"
+        cp -a  --parents "$ff" "$PKGDIR"
     done
-    tar -czf "$TGZDIR/$PKGNAME-$VERSION.tar.gz" "$PKGDIR"
+    tar -czf "$PKGNAME-$VERSION.tar.gz" "$PKGDIR"
+    cp -v "$PKGNAME-$VERSION.tar.gz" "$TGZDIR"
 popd > /dev/null
 
 if [ -d "$PKGDIR" ];then
