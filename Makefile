@@ -21,7 +21,7 @@ clean:
 	rm -rf sysd/sysd || true
 
 Manifest:
-	find . -type f | grep -v -e "^\./\.git" > Manifest
+	find . -type f | grep -v -e "^\./\.git" | sort | uniq > Manifest
 
 dist: Manifest
 	./scripts/tarball.sh || true
@@ -32,4 +32,4 @@ install:
 	## fi
 	install -D --mode=0644 sysd/sysd $(DESTDIR)/usr/sbin/sysd
 
-.PHONY: clean
+.PHONY: clean Manifest

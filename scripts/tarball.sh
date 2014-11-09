@@ -9,17 +9,19 @@ VERSION=$( cat "$ROOT/VERSION" )
 PKGNAME="sysd"
 
 PKGDIR="$ROOT/$PKGNAME-$VERSION"
+TGZDIR="$ROOT/pkg/tgz"
 
 if [ -d "$PKGDIR" ];then
     rm -rf "$PKGDIR"
 fi
 
 mkdir -p "$PKGDIR"
+mkdir -p "$TGZDIR"
 pushd $ROOT > /dev/null
     for ff in `cat Manifest`;do
         cp -av --parents "$ff" "$PKGDIR"
     done
-    tar -czf "$PKGNAME-$VERSION.tar.gz" "$PKGDIR"
+    tar -czf "$TGZDIR/$PKGNAME-$VERSION.tar.gz" "$PKGDIR"
 popd > /dev/null
 
 if [ -d "$PKGDIR" ];then
