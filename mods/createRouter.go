@@ -27,7 +27,7 @@ var (
 
 func CreateRouter(eng interface{}) (r *mux.Router, err error) {
 	var (
-		prefix = *flApiPrefix
+		prefix = strings.TrimSuffix(*flApiPrefix, "/")
 	)
 	r = mux.NewRouter()
 
@@ -42,7 +42,13 @@ func CreateRouter(eng interface{}) (r *mux.Router, err error) {
 			// build the handler function
 			f := makeHttpHandler(eng, localMethod, localRoute, localFct, APIVERSION)
 
-			if prefix == "" {
+			if strings.HasSuffix(localRoute, "/*") {
+				routeBase := prefix + "/" + strings.TrimSuffix(localRoute, "/*")
+				routeBase = strings.Replace(routeBase, "//", "/", -1)
+				r.MatcherFunc(func(r *http.Request, rm *mux.RouteMatch) bool {
+					return strings.HasPrefix(r.URL.Path, routeBase)
+				}).HandlerFunc(f)
+			} else if prefix == "" {
 				r.Path(localRoute).Methods(localMethod).HandlerFunc(f)
 			} else {
 				r.PathPrefix(prefix).Path(localRoute).Methods(localMethod).HandlerFunc(f)
