@@ -8,7 +8,7 @@ import json
 import sys
 
 # 檢查是否是 python3
-def is_python3():                                                                                                  
+def is_python3():
         major_version = sys.version_info[0]
         if major_version == 3:
                 return True
@@ -83,6 +83,60 @@ def cmd_ifconfig(args):
                 print("")
 
 
+def cmd_route(args):
+    global APIURL
+
+    result = RESTReq(APIURL).GET("/route")
+    if args.debug:
+        print(result)
+
+    ret_code = result["ret_code"]
+    ret_data = result["ret_data"]
+
+    if ret_code == 200:
+        data = json.loads(ret_data)
+
+        print("Kernel IP routing table")
+        print("Destination     Gateway         Genmask         Flags Metric Ref    Use Iface")
+        for item in data:
+            Flags = item['Flags']
+            flags = ""
+
+            # Ref: /usr/include/linux/route.h
+            RTF_UP          = 0x0001          #/* route usable                 */
+            RTF_GATEWAY     = 0x0002          #/* destination is a gateway     */
+            RTF_HOST        = 0x0004          #/* host entry (net otherwise)   */
+            RTF_REINSTATE   = 0x0008          #/* reinstate route after tmout  */
+            RTF_DYNAMIC     = 0x0010          #/* created dyn. (by redirect)   */
+            RTF_MODIFIED    = 0x0020          #/* modified dyn. (by redirect)  */
+            RTF_MTU         = 0x0040          #/* specific MTU for this route  */
+            RTF_WINDOW      = 0x0080          #/* per route window clamping    */
+            RTF_IRTT        = 0x0100          #/* Initial round trip time      */
+            RTF_REJECT      = 0x0200          #/* Reject route                 */
+
+            if ( int(Flags) & RTF_UP ) > 0: flags += "U"
+            if ( int(Flags) & RTF_GATEWAY ) > 0: flags += "G"
+            if ( int(Flags) & RTF_HOST ) > 0: flags += "H"
+            if ( int(Flags) & RTF_REINSTATE ) > 0: flags += "R"
+            if ( int(Flags) & RTF_DYNAMIC ) > 0: flags += "D"
+            if ( int(Flags) & RTF_MODIFIED ) > 0: flags += "M"
+            if ( int(Flags) & RTF_REJECT) > 0: flags += "!"
+
+            item["Flags"] = flags
+
+            print(
+                    item["Destination"].ljust(16," ")
+                    + item["Gateway"].ljust(16," ")
+                    + item["Mask"].ljust(16," ")
+                    + item["Flags"].ljust(6," ")
+                    + item["Metric"].ljust(7," ")
+                    + item["RefCnt"].ljust(7," ")
+                    + item["Use"].rjust(3," ")
+                    + " "
+                    + item["Iface"].ljust(4," ")
+                 )
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='subcmd')
@@ -96,6 +150,11 @@ if __name__ == '__main__':
     parser_sub = subparsers.add_parser('ifconfig', help='')
     parser_sub.add_argument('params', nargs='*', help='')
     parser_sub.set_defaults(func=cmd_ifconfig)
+
+    # sub command for "search"
+    parser_sub = subparsers.add_parser('route', help='')
+    parser_sub.add_argument('params', nargs='*', help='')
+    parser_sub.set_defaults(func=cmd_route)
 
     args = parser.parse_args()
     #print args; exit()
