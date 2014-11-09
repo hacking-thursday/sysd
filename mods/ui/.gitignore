@@ -1,0 +1,10 @@
+/node_modules/
+/files/lib/**/*.md
+/files/lib/**/*.gzip
+/files/lib/**/*.txt
+/files/lib/**/*.yml
+/files/lib/**/LICENSE
+/files/lib/**/Gruntfile.js
+/files/lib/**/Gruntfile.coffee
+/files/lib/angular-local-storage/demo/
+/files/lib/jquery/src/

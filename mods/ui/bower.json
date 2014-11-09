@@ -1,0 +1,13 @@
+{
+  "name": "SysdUI",
+  "version": "0.5.0",
+  "dependencies": {
+    "angular": "*",
+    "angular-material": "*",
+    "angular-translate": "*",
+    "angular-local-storage": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": ">=0"
+  }
+}
