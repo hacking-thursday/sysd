@@ -8,6 +8,7 @@ import (
 	flag "github.com/docker/docker/pkg/mflag"
 	"github.com/docker/docker/pkg/version"
 	"github.com/tsaikd/KDGoLib/env"
+	"github.com/tsaikd/KDGoLib/futil"
 
 	"github.com/hacking-thursday/sysd/mods"
 )
@@ -15,7 +16,7 @@ import (
 var (
 	flUiDir = flag.String(
 		[]string{"-SYSD_UI_DIR"},
-		env.GetString("SYSD_UI_DIR", "files"),
+		env.GetString("SYSD_UI_DIR", ""),
 		"SYSD UI Directory",
 	)
 )
@@ -23,6 +24,21 @@ var (
 func init() {
 	log.Debugf("Initializing module...")
 	mods.Register("GET", "/ui/*", handler_ui)
+
+	if !futil.IsExist(*flUiDir + "/index.html") {
+		tryPaths := []string{"files", "../mods/ui/files", "/usr/share/sysd/webui"}
+		for _, path := range tryPaths {
+			if futil.IsExist(path + "/index.html") {
+				*flUiDir = path
+				break
+			}
+
+		}
+
+		if !futil.IsExist(*flUiDir + "/index.html") {
+			log.Warnf("Incorrent UI directory: %v", *flUiDir)
+		}
+	}
 }
 
 func handler_ui(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
