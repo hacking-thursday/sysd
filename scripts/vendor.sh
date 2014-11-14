@@ -64,11 +64,11 @@ function do_patch(){
     set -e
 }
 
-clone git f92b795 github.com/Sirupsen/logrus
+clone git v0.6.0  github.com/Sirupsen/logrus
 clone git e444e69 github.com/gorilla/mux
 clone git 14f550f github.com/gorilla/context
 clone git 6070b2c github.com/tsaikd/KDGoLib
-clone git 3afe9db github.com/docker/docker
+clone git v1.3.1  github.com/docker/docker
 
 do_patch "$ROOT/misc/001.patch" "$VENDOR/src/github.com/docker/libcontainer"
 do_patch "$ROOT/misc/002.patch" "$VENDOR/src/github.com/docker/docker"
