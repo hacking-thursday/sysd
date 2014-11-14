@@ -1,0 +1,2 @@
+version=3
+https://github.com/hacking-thursday/sysd/releases .*/v?(\d\S*)/sysd-(?:\d\S*)\.(?:zip|tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))
