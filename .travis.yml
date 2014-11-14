@@ -1,0 +1,6 @@
+language:
+    -   golang
+
+script:
+    -   ./configure
+    -   make
