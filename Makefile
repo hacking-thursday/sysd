@@ -27,9 +27,7 @@ dist:
 	./scripts/tarball.sh || true
 
 install:
-	## @if [ ! -f "/usr/bin/sysd" ]; then \
-	## 	ln -s $(PWD)/sysd/sysd /usr/bin/sysd; \
-	## fi
 	install -D --mode=0644 sysd/sysd $(DESTDIR)/usr/sbin/sysd
+	install -D --mode=0644 sysd-cli/sysd-cli $(DESTDIR)/usr/bin/sysd-cli
 
 .PHONY: clean Manifest
