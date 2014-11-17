@@ -1,5 +1,5 @@
-sysd (0.4.1-2utopic2) utopic; urgency=low
+sysd (0.6.0) unstable; urgency=medium
 
   * Initial release.
 
- -- Chun-Yu Lee (Mat) <matlinuxer2@gmail.com>  Mon, 04 Nov 2014 16:00:00 +0800
+ -- Chun-Yu Lee (Mat) <matlinuxer2@gmail.com>  Fri, 14 Nov 2014 17:51:44 +0000
