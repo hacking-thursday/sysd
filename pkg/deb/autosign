@@ -1,0 +1,56 @@
+#!/usr/bin/expect 
+
+if { $argc < 1 } {
+
+send_user " usage: \n"
+send_user "        \n"
+send_user "        autosign <command + arguments>\n"
+send_user "        \n"
+send_user "    ex: autosign debuild -S\n"
+send_user "        \n"
+send_user "        \n"
+
+exit
+
+}
+
+catch { exec stty -echo }
+send_user "The password for gpg signing: "
+expect_user -re "(.*)\n" { set PASSWD $expect_out(1,string) }
+send_user "\n"
+catch { exec stty echo }
+
+
+#### main spawning process ####
+eval spawn $argv
+
+trap { 
+	send ":kill"
+	exit
+} SIGINT
+
+
+set pid [exp_pid]
+while { $pid > 0 } {
+	expect  {
+		"nter passphrase:" { 
+			send "$PASSWD" 
+		}
+		"continue anyway? (y/n)" { 
+			send "y" 
+		}
+		"debchange: Did you see that warning?  Press RETURN to continue..." { 
+			send "" 
+		}
+		timeout { 
+			exp_continue
+		}
+		eof {
+			exit
+		}
+
+	}
+}
+
+exit 
+
