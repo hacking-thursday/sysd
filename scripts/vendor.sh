@@ -70,9 +70,9 @@ clone git 14f550f github.com/gorilla/context
 clone git 6070b2c github.com/tsaikd/KDGoLib
 clone git v1.3.1  github.com/docker/docker
 
-do_patch "$ROOT/misc/001.patch" "$VENDOR/src/github.com/docker/libcontainer"
-do_patch "$ROOT/misc/002.patch" "$VENDOR/src/github.com/docker/docker"
-do_patch "$ROOT/misc/003.patch" "$VENDOR/src/github.com/docker/docker"
+do_patch "$ROOT/scripts/vendor-001.patch" "$VENDOR/src/github.com/docker/libcontainer"
+do_patch "$ROOT/scripts/vendor-002.patch" "$VENDOR/src/github.com/docker/docker"
+do_patch "$ROOT/scripts/vendor-003.patch" "$VENDOR/src/github.com/docker/docker"
 
 rm -r "$VENDOR/src/github.com/docker/docker/docs"
 rm -r "$VENDOR/src/github.com/docker/docker/vendor"
