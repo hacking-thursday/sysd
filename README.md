@@ -1,5 +1,6 @@
 sysd: the daemon who supplies firsthand system data
 ====
+[![Build Status](https://travis-ci.org/hacking-thursday/sysd.svg?branch=master)](https://travis-ci.org/hacking-thursday/sysd)
 
 sysd is an open source project to supply the system data with HTTP API in a
 lightweight daemon.
