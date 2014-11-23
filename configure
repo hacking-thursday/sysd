@@ -1,12 +1,21 @@
 #!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
-ROOT="$( cd $( dirname $0 ) && pwd -P )"
-VENDOR="$ROOT/vendor"
+readonly PACKAGE_NAME="sysd"
+readonly PACKAGE_VERSION=$(cat VERSION)
 
-PACKAGE_NAME='sysd'
-PACKAGE_VERSION=$( cat $ROOT/VERSION )
+readonly ROOT="$(readlink -m $(dirname $0))"
 
-pushd "$ROOT" > /dev/null
-    test -d $VENDOR || $ROOT/scripts/vendor.sh
-    test -d $VENDOR && PASS_DEPS="ok"
-popd > /dev/null
+init_vendor() {
+  local readonly dir=$1
+
+  [[ -d $dir ]] \
+    || $ROOT/scripts/vendor.sh
+}
+
+main() {
+  init_vendor "$ROOT/vendor"
+}
+
+main
