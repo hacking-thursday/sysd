@@ -16,7 +16,7 @@ function local_dput(){
 [ppaa]
 fqdn                    = ppa.launchpad.net
 method                  = ftp
-incoming                = ~matlinuxer2/sysd
+incoming                = ~sysd/sysd
 login                   = anonymous
 EOD
 
@@ -27,8 +27,8 @@ EOD
 
 PKG_NAME="sysd"
 PKG_VER="0.6.0"
-CNT="3"
-TARBALL_URL="https://github.com/hacking-thursday/sysd/releases/download/v0.6.0/sysd-0.6.0.tar.gz"
+CNT="1"
+TARBALL_URL="https://github.com/hacking-thursday/sysd/releases/download/v${PKG_VER}/sysd-${PKG_VER}.tar.gz"
 TARBALL_NAME="${PKG_NAME}-${PKG_VER}.tar.gz"
 TARBALL_NAME2="${PKG_NAME}_${PKG_VER}.orig.tar.gz"
 TARBALL_DIR="${TARBALL_NAME%.tar.gz}"
@@ -49,8 +49,7 @@ pushd $TEMP_DIR
             cp "$TARBALL_DIR/debian/changelog" /tmp/changelog.bak
             pushd "$TARBALL_DIR"
                 sed -i debian/control -e 's/golang-go,.*/golang-go/g'
-                sed -i debian/changelog -e "s/unstable;/${codename};/g"
-                sed -i debian/changelog -e "s/${PKG_VER})/${PKG_VER}-0)/g"
+                DEBEMAIL="$(get_gpg_signname)" debchange --newversion "${PKG_VER}-0" --force-distribution --distribution $codename "for $codename"
                 debuild -S | tee /tmp/debuild.log
 
                 CHANGES="$(sed -n 's/^.*signfile \(.*\.changes\).*$/\1/p' /tmp/debuild.log)"
