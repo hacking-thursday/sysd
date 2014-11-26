@@ -18,6 +18,7 @@ import (
 func init() {
 	log.Debugf("Initializing module...")
 	mods.Register("GET", "/route", handler)
+	mods.Register("GET", "/network/route", handler)
 }
 
 func hex_to_ip(input string) string {
