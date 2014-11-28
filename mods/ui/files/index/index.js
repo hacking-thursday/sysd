@@ -1,8 +1,8 @@
 app
 
 .controller("IndexCtrl"
-	, [       "$scope", "$mdBottomSheet", "$mdToast", "$translate", "localStorageService", "sysd", "Loading"
-	, function($scope,   $mdBottomSheet,   $mdToast,   $translate,   localStorageService,   sysd,   Loading) {
+	, [       "$scope", "$mdBottomSheet", "$mdToast", "$translate", "localStorageService", "sysd", "sysdProcGraph", "Loading"
+	, function($scope,   $mdBottomSheet,   $mdToast,   $translate,   localStorageService,   sysd,   sysdProcGraph,   Loading) {
 
 	sysd.host = localStorageService.get("sysdhost") || "127.0.0.1";
 	sysd.port = +localStorageService.get("sysdport") || 8080;
