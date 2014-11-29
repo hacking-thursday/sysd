@@ -4,34 +4,40 @@ app
 	, [       "$q", "sysd"
 	, function($q,   sysd) {
 
-	sysd.getProcGraph = function() {
-		var deferred = $q.defer();
-		var apis = ["process/resource", "network/socket"];
-		var err = {
+	sysd.supportProcGraph = false;
+
+	var depApis = ["process/resource", "network/socket"];
+
+	sysd.checkProcGraph = function() {
+		var res = {
 			apis: []
 		};
 
 		// check all necessry api supported
-		angular.forEach(apis, function(api) {
+		angular.forEach(depApis, function(api) {
 			if (!sysd.api.get[api]) {
-				err.apis.push(api);
+				res.apis.push(api);
+				res.errMsg = "some dependent apis unsupported in this platform";
 			}
 		});
-		if (err.apis[0]) {
-			deferred.reject({
-				errMsg: "some dependent apis unsupported in this platform",
-				apis: err.apis
-			});
+		sysd.supportProcGraph = res.supported = !res.apis[0];
+		return res;
+	};
+
+	sysd.getProcGraph = function() {
+		var deferred = $q.defer();
+		var check = sysd.checkProcGraph();
+
+		if (!check.supported) {
+			deferred.reject(check);
 			return deferred.promise;
 		}
 
 		var deferall = [];
-		angular.forEach(apis, function(api) {
+		angular.forEach(depApis, function(api) {
 			deferall.push(sysd.api.get[api]());
 		});
 		$q.all(deferall).then(function(res) {
-			// TODO: parse res
-			window.data = [];
 			process_data = res[0].processes;
 			socket_data = res[1];
 
@@ -87,12 +93,10 @@ app
 				}
 			}
 
-			// 注意，目前先暫時將資料存在 window.data 裡下，方便 debug
-			window.data = {};
-			window.data.process = result_process;
-			window.data.socket = result_socket;
-
-			deferred.resolve(res);
+			deferred.resolve({
+				process: result_process,
+				socket: result_socket
+			});
 		}, function(res) {
 			deferred.reject(res);
 		});
