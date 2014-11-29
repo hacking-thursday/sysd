@@ -4,6 +4,7 @@ app
 	, [       "$scope", "$mdBottomSheet", "$mdToast", "$translate", "localStorageService", "sysd", "sysdProcGraph", "Loading"
 	, function($scope,   $mdBottomSheet,   $mdToast,   $translate,   localStorageService,   sysd,   sysdProcGraph,   Loading) {
 
+	window.sysd = sysd;
 	sysd.host = localStorageService.get("sysdhost") || "127.0.0.1";
 	sysd.port = +localStorageService.get("sysdport") || 8080;
 	$scope.sysd = sysd;
