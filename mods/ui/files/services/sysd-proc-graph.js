@@ -50,6 +50,7 @@ app
 				row = {};
 				row["pid"] = pid;
 				row["cmdline"] = process_data[key]["cmdline"];
+				row["status"] = process_data[key]["status"];
 				row["socket"] = [];
 
 				fd_ary = process_data[key]["fd"];
@@ -70,6 +71,34 @@ app
 
 				result_process[pid] = row;
 			}
+
+                        result_process_tree = {}
+                        {
+                            function check_and_init( p_id ){
+                                if( ppid == "0" ){ return; }
+
+                                if ( !pids2[p_id] ){
+                                    pids2[p_id] = { "obj": result_process[p_id] };
+
+                                    pids2[p_id]["obj"]["pid"] = p_id;
+                                    pids2[p_id]["obj"]["children"] = [];
+                                    //pids2[p_id]["obj"]["parent"] = null;
+                                }
+                            }
+                            pids = Object.keys( result_process );
+                            pids2 = {};
+                            for( pid = pids.pop() ; pid ; pid = pids.pop() ){
+                                ppid = result_process[pid]["status"]["ppid"];
+
+                                check_and_init( ppid );
+                                check_and_init( pid );
+
+                                pids2[pid]["obj"] = result_process[pid];
+                                if( ppid != "0" ){
+                                    pids2[ppid]["obj"]["children"].push( pids2[pid]["obj"] );
+                                }
+                            }
+                        }
 
 			// 編列 socket 的資料
 			result_socket = {}
