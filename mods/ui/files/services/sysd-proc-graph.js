@@ -6,7 +6,7 @@ app
 
 	sysd.supportProcGraph = false;
 
-	var depApis = ["process/resource", "network/socket", "network/ifce"];
+	var depApis = ["process/resource", "network/socket", "network/ifce", "sysfs"];
 
 	sysd.checkProcGraph = function() {
 		var res = {
@@ -41,6 +41,7 @@ app
 			process_data = res[0].processes;
 			socket_data = res[1];
                         ifce_data = res[2];
+                        hw_data = res[3];
 
 			// 編列 process 的資料
 			result_process = {}
@@ -118,6 +119,14 @@ app
 			for ( i=0; i<ifce_data.length; i++ ){
                             ifce_name = ifce_data[i]["Name"];
                             result_ifce[ifce_name] = ifce_data[i];
+                        }
+
+                        // 編列 hardware 的資料
+                        result_hw = {}
+                        for ( var ifce_name in hw_data["class"]["net"] ){
+                                var row = {};
+                                row["device_path"] = hw_data["class"]["net"][ifce_name][1];
+                                result_hw[ifce_name] = row;
                         }
 
 			// 重新 scan 一次 process 的列表，並將 socket 的資料用物件連結取代
