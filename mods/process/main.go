@@ -9,6 +9,7 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"strings"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/docker/docker/pkg/version"
@@ -45,7 +46,13 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 			scanner := bufio.NewScanner(f)
 			scanner.Scan()
 			cmdline_txt := scanner.Text()
-                        f.Close()
+			cmdline_ary := strings.Split(cmdline_txt, "\u0000")
+			ary_len := len(cmdline_ary)
+			if cmdline_ary[ary_len-1] == "" && ary_len >= 2 {
+				cmdline_ary = cmdline_ary[0 : ary_len-1]
+			}
+
+			f.Close()
 
 			if err2 == nil {
 				for j := 0; j < len(d_pathes2); j++ {
@@ -64,7 +71,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 					if _, ok := result["processes"].(TreeNode)[pid]; !ok {
 						result["processes"].(TreeNode)[pid] = TreeNode{}
 						result["processes"].(TreeNode)[pid].(TreeNode)["fd"] = TreeNode{}
-						result["processes"].(TreeNode)[pid].(TreeNode)["cmdline"] = cmdline_txt
+						result["processes"].(TreeNode)[pid].(TreeNode)["cmdline"] = cmdline_ary
 					}
 
 					if _, ok := result["processes"].(TreeNode)[pid].(TreeNode)["fd"].(TreeNode)[fd]; !ok {
