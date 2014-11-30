@@ -74,8 +74,8 @@ app
 
                         result_process_tree = {}
                         {
-                            function check_and_init( p_id ){
-                                if( ppid == "0" ){ return; }
+                            function check_and_init( p_id, pids2, result_process ){
+                                if( p_id == "0" ){ return; }
 
                                 if ( !pids2[p_id] ){
                                     pids2[p_id] = { "obj": result_process[p_id] };
@@ -90,8 +90,8 @@ app
                             for( pid = pids.pop() ; pid ; pid = pids.pop() ){
                                 ppid = result_process[pid]["status"]["ppid"];
 
-                                check_and_init( ppid );
-                                check_and_init( pid );
+                                check_and_init( ppid, pids2, result_process );
+                                check_and_init(  pid, pids2, result_process );
 
                                 pids2[pid]["obj"] = result_process[pid];
                                 if( ppid != "0" ){
