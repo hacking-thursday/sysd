@@ -1,13 +1,13 @@
 app
 
 .factory("sysd"
-	, [       "$http", "$q"
-	, function($http,   $q) {
+	, [       "$http", "$q", "localStorageService"
+	, function($http,   $q,   localStorageService) {
 
 	function sysd() {
 		var $scope = this;
-		$scope.host = "127.0.0.1";
-		$scope.port = 8080;
+		$scope.host = localStorageService.get("sysdhost") || "127.0.0.1";
+		$scope.port = +localStorageService.get("sysdport") || 8080;
 		$scope.api = {
 			get: {}
 		};
