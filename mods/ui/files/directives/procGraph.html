@@ -1,19 +1,29 @@
 <md-content style="margin-top: -15px;">
-	<div layout="horizontal">
-		<md-card layout="vertical">
-			<md-subheader>Process</md-subheader>
-			<md-button ng-repeat="(pid, proc) in procData.process"
-				ng-click="selectProc(proc)"
-				ng-class="{'md-raised': curProc === proc, 'md-primary': curJson === proc}"
-				aria-label="proc-{{pid}}">{{pid}}</md-button>
-		</md-card>
-		<md-card layout="vertical">
-			<md-subheader>Socket</md-subheader>
-			<md-button ng-repeat="sock in curProc.socket"
-				ng-click="selectSock(sock)"
-				ng-class="{'md-raised': curSock === sock, 'md-primary': curJson === sock}"
-				aria-label="docket-{{sock.inode}}">{{sock.inode}}</md-button>
-		</md-card>
-		<md-card flex class="md-padding" style="white-space: pre;">{{jsonData}}</md-card>
+	<div layout="vertical">
+		<div layout="horizontal" style="height: 75vh;">
+			<md-card layout="vertical">
+				<md-content layout="vertical">
+					<md-subheader>Process</md-subheader>
+					<md-button ng-repeat="(pid, proc) in procData.process"
+						ng-click="selectProc(proc)"
+						ng-class="{'md-raised': curProc === proc, 'md-primary': curJson === proc}"
+						style="min-height: 31px;"
+						aria-label="proc-{{pid}}">{{pid}}</md-button>
+				</md-content>
+			</md-card>
+			<md-card layout="vertical">
+				<md-content layout="vertical">
+					<md-subheader>Socket</md-subheader>
+					<md-button ng-repeat="sock in curProc.socket"
+						ng-click="selectSock(sock)"
+						ng-class="{'md-raised': curSock === sock, 'md-primary': curJson === sock}"
+						style="min-height: 31px;"
+						aria-label="docket-{{sock.inode}}">{{sock.inode}}</md-button>
+				</md-content>
+			</md-card>
+		</div>
+		<div layout="horizontal" style="height: 25vh;">
+			<md-card flex class="md-padding" style="white-space: pre; overflow: auto;">{{jsonData}}</md-card>
+		</div>
 	</div>
 </md-content>
