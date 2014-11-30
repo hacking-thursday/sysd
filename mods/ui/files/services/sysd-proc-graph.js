@@ -104,18 +104,6 @@ app
 		return deferred.promise;
 	};
 
-	sysd.getProcessData = function( pid ) {
-                if( parseInt(pid) > 0 ){
-                    return window.data.process[pid];
-                }
-
-                return window.data.process;
-	};
-
-	sysd.getSocketData = function() {
-                return window.data.socket;
-	};
-
 	return sysd;
 }])
 
