@@ -3,6 +3,7 @@
 package process
 
 import (
+	"bufio"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -39,6 +40,13 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 			target_path2 := path.Join(target_path, d_pathes[i].Name(), "fd")
 			d_pathes2, err2 := ioutil.ReadDir(target_path2)
 
+			cmdline_path := path.Join(target_path, d_pathes[i].Name(), "cmdline")
+			f, _ := os.Open(cmdline_path)
+			scanner := bufio.NewScanner(f)
+			scanner.Scan()
+			cmdline_txt := scanner.Text()
+                        f.Close()
+
 			if err2 == nil {
 				for j := 0; j < len(d_pathes2); j++ {
 					target_path3 := path.Join(target_path2, d_pathes2[j].Name())
@@ -55,10 +63,12 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 
 					if _, ok := result["processes"].(TreeNode)[pid]; !ok {
 						result["processes"].(TreeNode)[pid] = TreeNode{}
+						result["processes"].(TreeNode)[pid].(TreeNode)["fd"] = TreeNode{}
+						result["processes"].(TreeNode)[pid].(TreeNode)["cmdline"] = cmdline_txt
 					}
 
-					if _, ok := result["processes"].(TreeNode)[pid].(TreeNode)[fd]; !ok {
-						result["processes"].(TreeNode)[pid].(TreeNode)[fd] = row
+					if _, ok := result["processes"].(TreeNode)[pid].(TreeNode)["fd"].(TreeNode)[fd]; !ok {
+						result["processes"].(TreeNode)[pid].(TreeNode)["fd"].(TreeNode)[fd] = row
 					}
 
 					//result = append(result, row)
