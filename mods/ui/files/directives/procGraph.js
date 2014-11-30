@@ -19,6 +19,16 @@ app
 		$scope.curJson = $scope.curSock = sock;
 	};
 
+	$scope.selectIfce= function(ifce) {
+                console.log( ifce );
+		$scope.curJson = $scope.curIfce = ifce;
+	};
+
+	$scope.selectHw= function(hw) {
+                console.log( hw );
+		$scope.curJson = $scope.curHw = hw;
+	};
+
 	$scope.$watch("curJson", function() {
 		$scope.jsonData = JSON.stringify($scope.curJson, undefined, 4);
 	});

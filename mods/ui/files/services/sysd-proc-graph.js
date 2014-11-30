@@ -126,6 +126,8 @@ app
                         for ( var ifce_name in hw_data["class"]["net"] ){
                                 var row = {};
                                 row["device_path"] = hw_data["class"]["net"][ifce_name][1];
+                                row["devpath"]     = "("+ifce_name + ") " + hw_data["class"]["net"][ifce_name][1].replace(/(\/sys\/devices)(.*)/, "$2");
+                                row["ifce"]     = ifce_name;
                                 result_hw[ifce_name] = row;
                         }
 
@@ -143,6 +145,7 @@ app
 			deferred.resolve({
 				process: result_process,
 				socket: result_socket,
+				hw: result_hw,
 				ifce: result_ifce
 			});
 		}, function(res) {

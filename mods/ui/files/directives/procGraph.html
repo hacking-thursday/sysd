@@ -21,6 +21,26 @@
 						aria-label="docket-{{sock.inode}}">{{sock.inode}}</md-button>
 				</md-content>
 			</md-card>
+			<md-card layout="vertical">
+				<md-content layout="vertical">
+					<md-subheader>Interface</md-subheader>
+					<md-button ng-repeat="ifce in procData.ifce"
+						ng-click="selectIfce(ifce)"
+						ng-class="{'md-raised': curIfce === ifce, 'md-primary': curJson === ifce}"
+						style="min-height: 31px;"
+						aria-label="docket-{{ifce.Name}}">{{ifce.Name}}</md-button>
+				</md-content>
+			</md-card>
+			<md-card layout="vertical">
+				<md-content layout="vertical">
+					<md-subheader>Hardware</md-subheader>
+					<md-button ng-repeat="hw in procData.hw"
+						ng-click="selectHw(hw)"
+						ng-class="{'md-raised': curHw === hw, 'md-primary': curJson === hw}"
+						style="min-height: 31px;"
+						aria-label="docket-{{hw.devpath}}">{{hw.devpath}}</md-button>
+				</md-content>
+			</md-card>
 		</div>
 		<div layout="horizontal" style="height: 25vh;">
 			<md-card flex class="md-padding" style="white-space: pre; overflow: auto;">{{jsonData}}</md-card>
