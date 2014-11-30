@@ -43,7 +43,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		// 針對第一行處理
 		if i == 1 {
 			for _, v := range fields {
-				header = append(header, v)
+				header = append(header, strings.ToLower(v))
 			}
 			continue
 		}
@@ -76,7 +76,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		// 針對第一行處理
 		if i == 1 {
 			for _, v := range fields {
-				header = append(header, v)
+				header = append(header, strings.ToLower(v))
 			}
 			continue
 		}
@@ -172,7 +172,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		// 針對第一行處理
 		if i == 1 {
 			for _, v := range fields {
-				header = append(header, v)
+				header = append(header, strings.ToLower(v))
 			}
 			continue
 		}
@@ -269,7 +269,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		// 針對第一行處理
 		if i == 1 {
 			for _, v := range fields {
-				header = append(header, v)
+				header = append(header, strings.ToLower(v))
 			}
 			continue
 		}
@@ -366,7 +366,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		// 針對第一行處理
 		if i == 1 {
 			for _, v := range fields {
-				header = append(header, v)
+				header = append(header, strings.ToLower(v))
 			}
 			continue
 		}
