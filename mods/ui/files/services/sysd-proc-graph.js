@@ -48,9 +48,10 @@ app
 
 				row = {};
 				row["pid"] = pid;
+				row["cmdline"] = process_data[key]["cmdline"];
 				row["socket"] = [];
 
-				fd_ary = process_data[key];
+				fd_ary = process_data[key]["fd"];
 				for( var fd in fd_ary ){
 					fd_key = fd_ary[fd][0];
 					fd_val = fd_ary[fd][1];
