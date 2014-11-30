@@ -23,13 +23,15 @@ app
 		$scope.jsonData = JSON.stringify($scope.curJson, undefined, 4);
 	});
 
-	sysd.getProcGraph().then(function(data) {
-		$scope.procData = data;
-		for (var pid in data.process) {
-			// init with first process data
-			$scope.selectProc(data.process[pid]);
-			break;
-		}
+	sysd.regapis().then(function() {
+		sysd.getProcGraph().then(function(data) {
+			$scope.procData = data;
+			for (var pid in data.process) {
+				// init with first process data
+				$scope.selectProc(data.process[pid]);
+				break;
+			}
+		});
 	});
 
 }])

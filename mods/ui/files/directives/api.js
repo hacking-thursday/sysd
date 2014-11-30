@@ -28,7 +28,9 @@ app
 	};
 
 	if ($scope.apiname) {
-		$scope.api($scope.apiname);
+		sysd.regapis().then(function() {
+			$scope.api($scope.apiname);
+		});
 	}
 
 }])

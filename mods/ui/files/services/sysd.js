@@ -42,9 +42,13 @@ app
 		return deferred.promise;
 	};
 
-	sysd.prototype.regapis = function() {
+	var regapisDefer = null;
+	sysd.prototype.regapis = function(force) {
 		var $scope = this;
-		var deferred = $q.defer();
+		if (regapisDefer && !force) {
+			return regapisDefer.promise;
+		}
+		var deferred = regapisDefer = $q.defer();
 		$scope.api = {
 			get: {}
 		};
