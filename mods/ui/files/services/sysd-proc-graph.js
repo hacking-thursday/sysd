@@ -6,7 +6,7 @@ app
 
 	sysd.supportProcGraph = false;
 
-	var depApis = ["process/resource", "network/socket"];
+	var depApis = ["process/resource", "network/socket", "network/ifce"];
 
 	sysd.checkProcGraph = function() {
 		var res = {
@@ -40,6 +40,7 @@ app
 		$q.all(deferall).then(function(res) {
 			process_data = res[0].processes;
 			socket_data = res[1];
+                        ifce_data = res[2];
 
 			// 編列 process 的資料
 			result_process = {}
@@ -83,6 +84,13 @@ app
 				}
 			}
 
+                        // 編列 interface 的資料
+                        result_ifce = {}
+			for ( i=0; i<ifce_data.length; i++ ){
+                            ifce_name = ifce_data[i]["Name"];
+                            result_ifce[ifce_name] = ifce_data[i];
+                        }
+
 			// 重新 scan 一次 process 的列表，並將 socket 的資料用物件連結取代
 			for( var key in result_process ){
 				var itm = result_process[key];
@@ -96,7 +104,8 @@ app
 
 			deferred.resolve({
 				process: result_process,
-				socket: result_socket
+				socket: result_socket,
+				ifce: result_ifce
 			});
 		}, function(res) {
 			deferred.reject(res);
