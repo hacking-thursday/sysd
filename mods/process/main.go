@@ -54,6 +54,33 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 
 			f.Close()
 
+			// 讀取 /proc/<pid>/status 的資料
+			status_ary := map[string]string{}
+			{
+				the_path := path.Join(target_path, d_pathes[i].Name(), "status")
+				f, _ := os.Open(the_path)
+				scanner := bufio.NewScanner(f)
+				row := map[string]string{}
+				for scanner.Scan() {
+					line := scanner.Text()
+					// if line == "" {
+					// 	result = append(result, row)
+					// 	row = map[string]string{}
+
+					// 	i += 1
+					// }
+
+					ary := strings.Split(line, ":")
+					if len(ary) == 2 {
+						key := strings.TrimSpace(ary[0])
+						val := strings.TrimSpace(ary[1])
+						key = strings.ToLower(key)
+						row[key] = val
+					}
+				}
+				status_ary = row
+			}
+
 			if err2 == nil {
 				for j := 0; j < len(d_pathes2); j++ {
 					target_path3 := path.Join(target_path2, d_pathes2[j].Name())
@@ -72,6 +99,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 						result["processes"].(TreeNode)[pid] = TreeNode{}
 						result["processes"].(TreeNode)[pid].(TreeNode)["fd"] = TreeNode{}
 						result["processes"].(TreeNode)[pid].(TreeNode)["cmdline"] = cmdline_ary
+						result["processes"].(TreeNode)[pid].(TreeNode)["status"] = status_ary
 					}
 
 					if _, ok := result["processes"].(TreeNode)[pid].(TreeNode)["fd"].(TreeNode)[fd]; !ok {
