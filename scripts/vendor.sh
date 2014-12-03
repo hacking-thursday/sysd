@@ -29,12 +29,24 @@ clone() {
 	echo -n 'clone, '
 	case $vcs in
 		git)
+                        which git 2>/dev/null
+                        if [ $? -ne 0 ];then
+                            echo "Error: git not found"
+                            exit 0
+                        fi
+
 			git clone --quiet --no-checkout $pkg_url $target_dir
 			( cd $target_dir && git reset --quiet --hard $rev )
                         cur_rev=$( cd $target_dir; git log --oneline | head -1 | awk '{print $1}' )
                         echo -n " cur_rev=$cur_rev "
 			;;
 		hg)
+                        which hg 2>/dev/null
+                        if [ $? -ne 0 ];then
+                            echo "Error: hg not found"
+                            exit 0
+                        fi
+
 			hg clone --quiet --updaterev $rev $pkg_url $target_dir
                         cur_rev=$( cd $target_dir; hg par | grep -e 'changeset' | awk '{print $2}' | cut -d: -f2 )
                         echo -n " cur_rev=$cur_rev "
