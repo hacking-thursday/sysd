@@ -7,7 +7,7 @@ app
 	function sysd() {
 		var $scope = this;
 		$scope.host = "127.0.0.1";
-		$scope.port = 8080;
+		$scope.port = 8;
 		$scope.api = {
 			get: {}
 		};
