@@ -1,9 +1,17 @@
-## 0.6.1 (unreleased)
+## 0.6.2 (unreleased)
+
+Features:
+
+  - 新增 Systemd Service 檔案
+  - 更改 Sysd Daemon 的預設 Port (#18, @yan)
+
+## 0.6.1 (2014-11-20)
 
 Features:
 
   - 新增 Travis CI 設定檔 (@czchen)
   - 新增 PPA 發佈工具
+  - 新增 debian package 自動簽署工具
 
 Bugfixes:
 
