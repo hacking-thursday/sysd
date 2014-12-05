@@ -18,7 +18,7 @@ import (
 var (
 	flApiAddr = flag.String(
 		[]string{"-SYSD_API_ADDR"},
-		env.GetString("SYSD_API_ADDR", "tcp://0.0.0.0:8080"),
+		env.GetString("SYSD_API_ADDR", "tcp://0.0.0.0:8"),
 		"Sysd API Server Listen Address",
 	)
 )

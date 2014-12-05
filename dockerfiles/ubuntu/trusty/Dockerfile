@@ -6,6 +6,6 @@ RUN echo "deb-src http://ppa.launchpad.net/matlinuxer2/sysd/ubuntu trusty main" 
 RUN apt-get update
 RUN apt-get install -y --force-yes sysd
 
-EXPOSE 8080
+EXPOSE 8
 
 ENTRYPOINT ["/usr/sbin/sysd"]

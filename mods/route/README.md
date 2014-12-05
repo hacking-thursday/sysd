@@ -46,7 +46,7 @@ Example:
 import urllib.request
 import json
 
-json_str = urllib.request.urlopen("http://127.0.0.1:8080/route").read(1000)
+json_str = urllib.request.urlopen("http://127.0.0.1:8/route").read(1000)
 data_obj = json.loads(json_str.decode())
 for row in data_obj:
     print( row )
@@ -63,7 +63,7 @@ Example:
 ```
 <?php
 
-$json_str = file_get_contents( "http://127.0.0.1:8080/route" );
+$json_str = file_get_contents( "http://127.0.0.1:8/route" );
 $data_obj = json_decode( $json_str );
 print_r( $data_obj );
 

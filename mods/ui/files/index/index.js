@@ -5,7 +5,7 @@ app
 	, function($scope,   $mdBottomSheet,   $mdToast,   $translate,   localStorageService,   sysd,   Loading) {
 
 	sysd.host = localStorageService.get("sysdhost") || "127.0.0.1";
-	sysd.port = +localStorageService.get("sysdport") || 8080;
+	sysd.port = +localStorageService.get("sysdport") || 8;
 	$scope.sysd = sysd;
 	$scope.Loading = Loading;
 	$scope.config = {
@@ -56,7 +56,7 @@ app
 		sysd.regapis().then(function() {
 			// success
 		}, function(res) {
-			if (sysd.host == "127.0.0.1" && sysd.port == 8080) {
+			if (sysd.host == "127.0.0.1" && sysd.port == 8) {
 				return;
 			}
 			$mdToast.show({
@@ -83,7 +83,7 @@ app
 
 	$scope.resetConfig = function() {
 		sysd.host = $scope.config.host = "127.0.0.1";
-		sysd.port = $scope.config.port = 8080;
+		sysd.port = $scope.config.port = 8;
 		localStorageService.clearAll()
 		$scope.regapis();
 	};
