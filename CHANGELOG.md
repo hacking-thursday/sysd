@@ -5,6 +5,10 @@ Features:
   - 新增 Systemd Service 檔案
   - 更改 Sysd Daemon 的預設 Port (#18, @yan)
 
+Bugfixes:
+
+  -  檢查是否已安裝該 VCS 工具 (#41, bcbcarl)
+
 ## 0.6.1 (2014-11-20)
 
 Features:
