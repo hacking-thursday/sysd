@@ -10,12 +10,14 @@
 ./api/server/server.go
 ./api/server/server_unit_test.go
 ./builtins/builtins.go
+./CHANGELOG.md
 ./configure
 ./Dockerfile
 ./dockerfiles/arch/Dockerfile
 ./dockerfiles/fedora/heisenbug/Dockerfile
 ./dockerfiles/ubuntu/trusty/Dockerfile
 ./dockerfiles/ubuntu/utopic/Dockerfile
+./.dockerignore
 ./LICENSE
 ./Makefile
 ./Manifest
@@ -162,6 +164,7 @@
 ./pkg/deb/debian/copyright
 ./pkg/deb/debian/rules
 ./pkg/deb/debian/sysd.init
+./pkg/deb/debian/sysd.service
 ./pkg/deb/debian/watch
 ./pkg/deb/Dockerfile
 ./pkg/deb/ppa.sh
