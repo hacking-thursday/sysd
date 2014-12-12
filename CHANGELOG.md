@@ -1,13 +1,16 @@
-## 0.6.2 (unreleased)
+## 0.6.3 (2014-12-11)
 
 Features:
 
+  - 將 Sysd Daemon 的預設 port 改成 8 (Change default port to 8) (#18, @yan)
   - 新增 Systemd Service 檔案
-  - 更改 Sysd Daemon 的預設 Port (#18, @yan)
 
 Bugfixes:
 
-  -  檢查是否已安裝該 VCS 工具 (#41, bcbcarl)
+  - 修正 confirgure 寫法
+  - 修正 build sysd Dockerfile 寫法
+  - 修正 PPA 上傳工具
+  - 檢查是否已安裝該 VCS 工具 (#41, bcbcarl)
 
 ## 0.6.1 (2014-11-20)
 
