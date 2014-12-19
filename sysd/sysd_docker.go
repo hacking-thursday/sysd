@@ -10,7 +10,7 @@ import (
 )
 
 func runDaemonByDocker() {
-	host := "tcp://127.0.0.1:8080"
+	host := "tcp://127.0.0.1:8"
 
 	eng := engine.New()
 	if err := builtins.Register(eng); err != nil {

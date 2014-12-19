@@ -17,12 +17,13 @@ dependencies.
 
 ```
 git clone https://github.com/hacking-thursday/sysd && cd sysd
-docker run --rm -v "$(pwd)":/usr/src/sysd -w /usr/src/sysd golang ./make.sh
+docker run --rm -v "$PWD:/usr/src/sysd" -w /usr/src/sysd golang ./configure
+docker run --rm -v "$PWD:/usr/src/sysd" -w /usr/src/sysd golang make
 ```
 
 ## Usage
 
 ```
 ./sysd/sysd
-curl http://0.0.0.0:8080/apilist
+curl http://0.0.0.0:8/apilist
 ```
