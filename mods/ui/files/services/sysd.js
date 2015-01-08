@@ -7,7 +7,7 @@ app
 	function sysd() {
 		var $scope = this;
 		$scope.host = localStorageService.get("sysdhost") || "127.0.0.1";
-		$scope.port = +localStorageService.get("sysdport") || 8080;
+		$scope.port = +localStorageService.get("sysdport") || 8;
 		$scope.api = {
 			get: {}
 		};

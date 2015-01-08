@@ -6,6 +6,6 @@ RUN curl -O https://aur.archlinux.org/packages/sy/sysd/PKGBUILD
 
 RUN makepkg -ci --asroot --noconfirm
 
-EXPOSE 8080
+EXPOSE 8
 
 ENTRYPOINT ["/usr/sbin/sysd"]

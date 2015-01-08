@@ -14,7 +14,7 @@ app
 
 	$scope.resetConfig = function() {
 		sysd.host = $scope.config.host = "127.0.0.1";
-		sysd.port = $scope.config.port = 8080;
+		sysd.port = $scope.config.port = 8;
 		localStorageService.clearAll()
 		$scope.regapis();
 	};

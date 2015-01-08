@@ -52,7 +52,7 @@ app
 		sysd.regapis().then(function() {
 			sysd.checkProcGraph();
 		}, function(res) {
-			if (sysd.host == "127.0.0.1" && sysd.port == 8080) {
+			if (sysd.host == "127.0.0.1" && sysd.port == 8) {
 				return;
 			}
 			$mdToast.show({

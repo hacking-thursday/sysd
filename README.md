@@ -25,5 +25,5 @@ docker run --rm -v "$PWD:/usr/src/sysd" -w /usr/src/sysd golang make
 
 ```
 ./sysd/sysd
-curl http://0.0.0.0:8080/apilist
+curl http://0.0.0.0:8/apilist
 ```

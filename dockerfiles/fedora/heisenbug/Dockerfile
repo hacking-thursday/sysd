@@ -8,6 +8,6 @@ RUN yum install -y sysd
 
 RUN chmod u+x /usr/sbin/sysd
 
-EXPOSE 8080
+EXPOSE 8
 
 ENTRYPOINT ["/usr/sbin/sysd"]
