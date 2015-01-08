@@ -12,6 +12,7 @@ import (
 
 func init() {
 	mods.Register("GET", "/ifconfig", ifconfig)
+	mods.Register("GET", "/network/ifce", ifconfig)
 }
 
 type iface_t struct {
