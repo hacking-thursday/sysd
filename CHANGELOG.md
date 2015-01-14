@@ -1,3 +1,15 @@
+## 0.6.4 (2015-01-14)
+
+Features:
+
+  - merge some work from `webui-proc-graph` branch. ( by Chun-Yu Lee (Mat) )
+    - API 新增 network/ 分類目錄
+    - API 新增 process 資料
+
+Bugfixes:
+
+  - Fix the header parsing of /proc/net/arp. Tokenize by multiple spaces now. ( by Blex Liao )
+
 ## 0.6.3 (2014-12-11)
 
 Features:
