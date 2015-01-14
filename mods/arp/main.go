@@ -6,7 +6,7 @@ import (
 	"bufio"
 	"net/http"
 	"os"
-	"strings"
+	"regexp"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/docker/docker/pkg/version"
@@ -29,8 +29,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 	i := 0
 	for scanner.Scan() {
 		i += 1
-		line := scanner.Text()
-		fields := strings.Fields(line)
+		fields := regexp.MustCompile("\\s{2,}").Split(scanner.Text(), -1)
 
 		// 針對第一行處理
 		if i == 1 {
