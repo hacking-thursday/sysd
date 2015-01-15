@@ -20,8 +20,15 @@ clean:
 	rm -rf .tmp || true
 	rm -rf sysd/sysd || true
 
-Manifest: clean
-	find . -type f | grep -v -e "^\./\.git" | sort | uniq > Manifest
+Manifest:
+	find . -type f | grep -v -e "^\./\.git" \
+	               | grep -v -e "^\./\.gopath/" \
+	               | grep -v -e "^\./\.tmp/" \
+	               | grep -v -e "^\./sysd/sysd$$" \
+	               | grep -v -e "^\./pkg/tgz/" \
+	               | grep -v -e "^\./sysd-[0-9]\+\.[0-9]\+\.[0-9]\+.tar.gz$$" \
+	               | grep -v -e "^\./sysd-[0-9]\+\.[0-9]\+\.[0-9]\+/" \
+	               | sort | uniq > Manifest
 
 dist:
 	./scripts/tarball.sh || true
