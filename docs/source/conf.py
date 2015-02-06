@@ -45,7 +45,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'sysd'
-copyright = u'2015, Carl Su, Mat, TsaiKD, yan, Bruce Tsai'
+copyright = u'2014 - 2015, Bruce Tsai, Carl Su, Mat, TsaiKD, yan'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -244,7 +244,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'sysd', u'sysd Documentation',
-   u'Carl Su, Mat, TsaiKD, yan, Bruce Tsai', 'sysd', 'One line description of project.',
+   u'Bruce Tsai, Carl Su, Mat, TsaiKD, yan', 'sysd', 'One line description of project.',
    'Miscellaneous'),
 ]
 
