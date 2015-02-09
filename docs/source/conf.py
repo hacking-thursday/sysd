@@ -45,7 +45,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'sysd'
-copyright = u'2015, Carl Su, Mat, TsaiKD, yan, Bruce Tsai'
+copyright = u'2015, Carl Su || Chun-Yu Lee (Mat) || TsaiKD || yan <a0726h77@gmail.com> || Yi-Lung Tsai (Bruce Tsai)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -200,7 +200,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'sysd.tex', u'sysd Documentation',
-   u'Carl Su, Mat, TsaiKD, yan, Bruce Tsai', 'manual'),
+   u'Carl Su || Chun-Yu Lee (Mat) || TsaiKD || yan <a0726h77@gmail.com> || Yi-Lung Tsai (Bruce Tsai)', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -230,7 +230,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'sysd', u'sysd Documentation',
-     [u'Carl Su, Mat, TsaiKD, yan, Bruce Tsai'], 1)
+     [u'Carl Su || Chun-Yu Lee (Mat) || TsaiKD || yan <a0726h77@gmail.com> || Yi-Lung Tsai (Bruce Tsai)'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -244,7 +244,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'sysd', u'sysd Documentation',
-   u'Carl Su, Mat, TsaiKD, yan, Bruce Tsai', 'sysd', 'One line description of project.',
+   u'Carl Su || Chun-Yu Lee (Mat) || TsaiKD || yan <a0726h77@gmail.com> || Yi-Lung Tsai (Bruce Tsai)', 'sysd', 'One line description of project.',
    'Miscellaneous'),
 ]
 
