@@ -13,6 +13,7 @@ import (
 func init() {
 	mods.Register("GET", "/ifconfig", ifconfig)
 	mods.Register("GET", "/network/ifce", ifconfig)
+    mods.Register("GET", "/ifconfig/{name:.*}", ifconfig)
 }
 
 type iface_t struct {
@@ -93,10 +94,23 @@ func ifconfig(engine interface{}, version version.Version, w http.ResponseWriter
 		outIfaces = append(outIfaces, outIface)
 	}
 
-	if out, err = mods.Marshal(r, outIfaces); err != nil {
-		mods.HttpError(w, err)
-		return
-	}
+    if vars["name"] != ""  {
+        // return specified interface
+        for _, outIface := range outIfaces {
+            if outIface.Name == vars["name"]  {
+                if out, err = mods.Marshal(r, outIface); err != nil {
+                    mods.HttpError(w, err)
+                    return
+                }
+            }
+        }
+    } else {
+        // return all interface
+        if out, err = mods.Marshal(r, outIfaces); err != nil {
+            mods.HttpError(w, err)
+            return
+        }
+    }
 
 	if _, err = w.Write(out); err != nil {
 		mods.HttpError(w, err)
