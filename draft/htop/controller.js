@@ -30,7 +30,7 @@ function getCPUUsage($scope, $http, $interval) {
 
                     $scope.cpus = [];
                     for(i=0; i<cpu_total_first.length; i++) {
-                        percent = cacular_cpu_usage(cpu_idle_first[i], cpu_idle_second[i], cpu_total_first[i], cpu_total_second[i]);
+                        percent = calculate_cpu_usage(cpu_idle_first[i], cpu_idle_second[i], cpu_total_first[i], cpu_total_second[i]);
                         $scope.cpus.push({'id': i, 'percent': percent, 'bar': '|'.repeat(Math.round(percent / 100 * 140))});
                     }
                 }).
