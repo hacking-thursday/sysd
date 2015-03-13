@@ -64,7 +64,7 @@ func parse_cpu(s []string) CPU {
 }
 
 func get_procstat(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
-	var output []byte
+    var output []byte
     var procstat ProcStat
     var cpus []CPU
     var cpu CPU
@@ -99,14 +99,15 @@ func get_procstat(eng_ifce interface{}, version version.Version, w http.Response
         }
     }
 
-	if output, err = mods.Marshal(r, procstat); err != nil {
-		mods.HttpError(w, err)
-		return
-	}
+    if output, err = mods.Marshal(r, procstat); err != nil {
+        mods.HttpError(w, err)
+        return
+    }
 
-	if _, err = w.Write(output); err != nil {
-		mods.HttpError(w, err)
-		return
-	}
-	return
+    if _, err = w.Write(output); err != nil {
+        mods.HttpError(w, err)
+        return
+    }
+
+    return
 }
