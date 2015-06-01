@@ -1,5 +1,7 @@
 sysd: the daemon who supplies firsthand system data
 ====
+
+[![Join the chat at https://gitter.im/hacking-thursday/sysd](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hacking-thursday/sysd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/hacking-thursday/sysd.svg?branch=master)](https://travis-ci.org/hacking-thursday/sysd)
 
 sysd is an open source project to supply the system data with HTTP API in a
