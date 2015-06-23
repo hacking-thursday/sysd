@@ -1,0 +1,12 @@
+<div ng-show="Loading.isLoading('api')" layout="vertical" layout-align="space-around" flex>
+	<div layout="horizontal" layout-align="space-around">
+		<md-progress-circular mode="indeterminate"></md-progress-circular>
+	</div>
+</div>
+<div ng-show="!Loading.isLoading('api')" layout="vertical" flex>
+	<div layout="horizontal">
+		<span>{{apiReq.method}}</span>
+		<span style="margin-left: 0.5em;">{{apiReq.path}}</span>
+	</div>
+	<md-content flex class="md-padding" style="white-space: pre;">{{apiResData}}</md-content>
+</div>

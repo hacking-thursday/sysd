@@ -16,6 +16,7 @@ import (
 func init() {
 	log.Debugf("Initializing module...")
 	mods.Register("GET", "/arp", handler)
+	mods.Register("GET", "/network/arp", handler)
 }
 
 func handler(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {

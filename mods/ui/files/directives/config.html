@@ -1,0 +1,9 @@
+<div layout="vertical" flex>
+	<div translate>After configure sysd host and port, click left menu to get response from Sysd server</div>
+	<md-text-float label="Sysd Host" ng-model="config.host"></md-text-float>
+	<md-text-float label="Sysd Port" ng-model="config.port"></md-text-float>
+	<div layout="horizontal" layout-padding>
+		<md-button ng-click="saveConfig()" aria-label="Save Config" class="md-raised md-primary" style="padding: 0.3em 0.5em;" translate>Save</md-button>
+		<md-button ng-click="resetConfig()" aria-label="Reset Config" class="md-raised" style="padding: 0.3em 0.5em; margin-left: 1em;" translate>Reset</md-button>
+	</div>
+</div>
