@@ -7,8 +7,8 @@ import (
 	"mime"
 	"strings"
 
-	"github.com/docker/docker/engine"
 	log "github.com/Sirupsen/logrus"
+	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/parsers"
 	"github.com/docker/docker/pkg/version"
 )

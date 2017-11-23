@@ -44,9 +44,9 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		for ii := 0; ii < len(fields); ii++ {
 			key := header[ii]
 			val := fields[ii]
-                        row[key] = val
+			row[key] = val
 		}
-                result = append( result, row )
+		result = append(result, row)
 	}
 
 	if out, err = mods.Marshal(r, result); err != nil {

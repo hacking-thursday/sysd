@@ -19,9 +19,9 @@ import (
 	"github.com/docker/libcontainer/user"
 	"github.com/gorilla/mux"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/listenbuffer"
-	log "github.com/Sirupsen/logrus"
 	"github.com/docker/docker/pkg/systemd"
 	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/api"

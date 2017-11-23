@@ -31,7 +31,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 		line := scanner.Text()
 		if line == "" {
 			result = append(result, row)
-                        row = map[string]interface{}{}
+			row = map[string]interface{}{}
 
 			i += 1
 		}
@@ -42,7 +42,7 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 			val := strings.TrimSpace(ary[1])
 			row[key] = val
 
-            // Additionally parse flags into array 
+			// Additionally parse flags into array
 			if key == "flags" {
 				val_ary := strings.Split(val, " ")
 				row[key] = val_ary
