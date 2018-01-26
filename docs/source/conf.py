@@ -45,7 +45,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'sysd'
-copyright = u'2015, Carl Su || Chun-Yu Lee (Mat) || TsaiKD || yan <a0726h77@gmail.com> || Yi-Lung Tsai (Bruce Tsai)'
+copyright = u'According to https://github.com/hacking-thursday/sysd/blob/master/LICENSE'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
