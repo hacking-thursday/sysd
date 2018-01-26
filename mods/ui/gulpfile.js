@@ -95,7 +95,8 @@ gulp.task("index.html", function(done) {
 			],
 			html: [
 				minifyHtml({ empty: true })
-			]
+			],
+			enableHtmlComment: true
 		}))
 		.pipe(gulp.dest(root))
 		.pipe(connect.reload())

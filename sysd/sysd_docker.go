@@ -22,7 +22,7 @@ func runDaemonByDocker() {
 		daemonCfg.InstallFlags()
 		daemonCfg.Pidfile = "/tmp/sysd.pid"
 		daemonCfg.Root = "/tmp"
-		daemonCfg.BridgeIface= "none"
+		daemonCfg.BridgeIface = "none"
 
 		d, err := daemon.NewDaemon(daemonCfg, eng)
 		if err != nil {

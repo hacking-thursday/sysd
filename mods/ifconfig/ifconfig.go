@@ -7,12 +7,13 @@ import (
 	"github.com/docker/docker/pkg/version"
 
 	"github.com/hacking-thursday/sysd/mods"
-//        "fmt"
+	//        "fmt"
 )
 
 func init() {
 	mods.Register("GET", "/ifconfig", ifconfig)
 	mods.Register("GET", "/network/ifce", ifconfig)
+	mods.Register("GET", "/ifconfig/{name:.*}", ifconfig)
 }
 
 type iface_t struct {
@@ -28,18 +29,18 @@ type iface_t struct {
 		PointToPoint bool
 		Multicast    bool
 	}
-        Counters Counters
+	Counters Counters
 }
 
 type Counters struct {
-        BytesRecv   int
-        PacketsRecv int
-        Errin        int
-        Dropin       int
-        BytesSent   int
-        PacketsSent int
-        Errout       int
-        Dropout      int
+	BytesRecv   int
+	PacketsRecv int
+	Errin       int
+	Dropin      int
+	BytesSent   int
+	PacketsSent int
+	Errout      int
+	Dropout     int
 }
 
 func ifconfig(engine interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
@@ -59,7 +60,7 @@ func ifconfig(engine interface{}, version version.Version, w http.ResponseWriter
 		return
 	}
 
-        iface_counter_map := net_io_counters()
+	iface_counter_map := net_io_counters()
 
 	for _, iface = range ifaces {
 		outIface = iface_t{
@@ -75,7 +76,6 @@ func ifconfig(engine interface{}, version version.Version, w http.ResponseWriter
 		outIface.Flag.PointToPoint = iface.Flags&net.FlagPointToPoint != 0
 		outIface.Flag.Multicast = iface.Flags&net.FlagMulticast != 0
 
-
 		addrs, err = iface.Addrs()
 		if err != nil {
 			mods.HttpError(w, err)
@@ -87,15 +87,28 @@ func ifconfig(engine interface{}, version version.Version, w http.ResponseWriter
 			outIface.IP = append(outIface.IP, ip)
 		}
 
-                outIface.Counters = iface_counter_map[iface.Name]
-//                fmt.Println(iface_counter_map[iface.Name])
+		outIface.Counters = iface_counter_map[iface.Name]
+		//                fmt.Println(iface_counter_map[iface.Name])
 
 		outIfaces = append(outIfaces, outIface)
 	}
 
-	if out, err = mods.Marshal(r, outIfaces); err != nil {
-		mods.HttpError(w, err)
-		return
+	if vars["name"] != "" {
+		// return specified interface
+		for _, outIface := range outIfaces {
+			if outIface.Name == vars["name"] {
+				if out, err = mods.Marshal(r, outIface); err != nil {
+					mods.HttpError(w, err)
+					return
+				}
+			}
+		}
+	} else {
+		// return all interface
+		if out, err = mods.Marshal(r, outIfaces); err != nil {
+			mods.HttpError(w, err)
+			return
+		}
 	}
 
 	if _, err = w.Write(out); err != nil {

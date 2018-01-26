@@ -5,12 +5,13 @@ set -e
 ROOT="$( cd $( dirname $0 ) && pwd -P )/.."
 VENDOR="$ROOT/vendor"
 
-export GOPATH0="$ROOT/.gopath" 
-export GOPATH="$VENDOR:$GOPATH0:$GOPATH" 
+GOPATH0="$ROOT/.gopath"
+GOPATH="$VENDOR:$GOPATH0:$GOPATH"
+GOPATH="$( echo $GOPATH | sed -e 's/:$//g' )" # drop tralling comma
 echo "GOPATH: $GOPATH"
-echo "GOPATH0: $GOPATH0"
+export GOPATH
 
-export TMPDIR="$ROOT/.tmp" 
+export TMPDIR="$ROOT/.tmp"
 export CGO_ENABLED="0" # 有效減少 dependencies
 export BuildTags="$BuildTags exclude_graphdriver_devicemapper exclude_graphdriver_aufs exclude_graphdriver_btrfs" # 有效減少 dependencies
 

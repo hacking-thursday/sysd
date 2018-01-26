@@ -20,18 +20,18 @@ func init() {
 
 func handler(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	target_path := "/proc/cpuinfo"
-	result := []map[string]string{}
+	result := []map[string]interface{}{}
 	var out []byte
 
 	f, err := os.Open(target_path)
 	scanner := bufio.NewScanner(f)
 	i := 0
-	row := map[string]string{}
+	row := map[string]interface{}{}
 	for scanner.Scan() {
 		line := scanner.Text()
 		if line == "" {
 			result = append(result, row)
-                        row = map[string]string{}
+			row = map[string]interface{}{}
 
 			i += 1
 		}
@@ -41,6 +41,12 @@ func handler(eng_ifce interface{}, version version.Version, w http.ResponseWrite
 			key := strings.TrimSpace(ary[0])
 			val := strings.TrimSpace(ary[1])
 			row[key] = val
+
+			// Additionally parse flags into array
+			if key == "flags" {
+				val_ary := strings.Split(val, " ")
+				row[key] = val_ary
+			}
 		}
 	}
 

@@ -5,14 +5,14 @@ package builtins
 import (
 	"runtime"
 
-	"github.com/hacking-thursday/sysd/api"
-	apiserver "github.com/hacking-thursday/sysd/api/server"
 	"github.com/docker/docker/daemon/networkdriver/bridge"
 	"github.com/docker/docker/dockerversion"
 	"github.com/docker/docker/engine"
 	"github.com/docker/docker/events"
 	"github.com/docker/docker/pkg/parsers/kernel"
 	"github.com/docker/docker/registry"
+	"github.com/hacking-thursday/sysd/api"
+	apiserver "github.com/hacking-thursday/sysd/api/server"
 )
 
 func Register(eng *engine.Engine) error {

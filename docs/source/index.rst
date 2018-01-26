@@ -11,8 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   restapi
-
+   modules
 
 Indices and tables
 ==================

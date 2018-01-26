@@ -3,8 +3,8 @@
 package info2
 
 import (
-	"github.com/docker/docker/engine"
 	log "github.com/Sirupsen/logrus"
+	"github.com/docker/docker/engine"
 	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 	"net/http"

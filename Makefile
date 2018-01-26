@@ -15,6 +15,11 @@ run2:
 test:
 	env
 
+doc:
+	@echo "" > docs/source/modules.rst
+	@find mods/ -name "README.rst" -exec echo ".. include:: ../../{}" >> docs/source/modules.rst \;
+	cd docs; make html
+
 clean:
 	rm -rf .gopath || true
 	rm -rf .tmp || true

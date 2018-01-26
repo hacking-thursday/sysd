@@ -1,13 +1,13 @@
 app
 
 .factory("sysd"
-	, [       "$http", "$q"
-	, function($http,   $q) {
+	, [       "$http", "$q", "localStorageService"
+	, function($http,   $q,   localStorageService) {
 
 	function sysd() {
 		var $scope = this;
-		$scope.host = "127.0.0.1";
-		$scope.port = 8;
+		$scope.host = localStorageService.get("sysdhost") || "127.0.0.1";
+		$scope.port = +localStorageService.get("sysdport") || 8;
 		$scope.api = {
 			get: {}
 		};
@@ -42,9 +42,13 @@ app
 		return deferred.promise;
 	};
 
-	sysd.prototype.regapis = function() {
+	var regapisDefer = null;
+	sysd.prototype.regapis = function(force) {
 		var $scope = this;
-		var deferred = $q.defer();
+		if (regapisDefer && !force) {
+			return regapisDefer.promise;
+		}
+		var deferred = regapisDefer = $q.defer();
 		$scope.api = {
 			get: {}
 		};

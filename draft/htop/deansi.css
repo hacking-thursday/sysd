@@ -1,0 +1,34 @@
+.ansi_terminal { background-color: #222; color: #cfc; }
+.ansi_terminal { white-space: pre; font-family: monospace; }
+.ansi_black { color: black; }
+.ansi_red { color: darkred; }
+.ansi_green { color: darkgreen; }
+.ansi_yellow { color: orange; }
+.ansi_blue { color: darkblue; }
+.ansi_magenta { color: purple; }
+.ansi_cyan { color: darkcyan; }
+.ansi_white { color: lightgray; }
+.ansi_bright.ansi_black { color: gray; }
+.ansi_bright.ansi_red { color: red; }
+.ansi_bright.ansi_green { color: green; }
+.ansi_bright.ansi_yellow { color: yellow; }
+.ansi_bright.ansi_blue { color: blue; }
+.ansi_bright.ansi_magenta { color: magenta; }
+.ansi_bright.ansi_cyan { color: cyan; }
+.ansi_bright.ansi_white { color: white; }
+.ansi_bgblack { background-color: black; }
+.ansi_bgred { background-color: red; }
+.ansi_bggreen { background-color: green; }
+.ansi_bgyellow { background-color: yellow; }
+.ansi_bgblue { background-color: blue; }
+.ansi_bgmagenta { background-color: magenta; }
+.ansi_bgcyan { background-color: cyan; }
+.ansi_bgwhite { background-color: white; }
+.ansi_bright { font-weight: bold; }
+.ansi_faint { opacity: .5; }
+.ansi_italic { font-style: italic; }
+.ansi_underscore { text-decoration: underline; }
+.ansi_blink { text-decoration: blink; }
+.ansi_reverse { border: 1pt solid; }
+.ansi_hide { opacity: 0; }
+.ansi_strike { text-decoration: line-through; }
