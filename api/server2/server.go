@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	flag "github.com/docker/docker/pkg/mflag"
+	flag "flag"
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"
 
@@ -17,7 +17,7 @@ import (
 
 var (
 	flApiAddr = flag.String(
-		[]string{"-SYSD_API_ADDR"},
+		"SYSD_API_ADDR",
 		env.GetString("SYSD_API_ADDR", "tcp://0.0.0.0:8"),
 		"Sysd API Server Listen Address",
 	)

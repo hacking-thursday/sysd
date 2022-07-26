@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	flag "github.com/docker/docker/pkg/mflag"
+	flag "flag"
 	"github.com/docker/docker/pkg/version"
 	"github.com/tsaikd/KDGoLib/env"
 	"github.com/tsaikd/KDGoLib/futil"
@@ -15,7 +15,7 @@ import (
 
 var (
 	flUiDir = flag.String(
-		[]string{"-SYSD_UI_DIR"},
+		"SYSD_UI_DIR",
 		env.GetString("SYSD_UI_DIR", ""),
 		"SYSD UI Directory",
 	)

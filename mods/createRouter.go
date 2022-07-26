@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	flag "github.com/docker/docker/pkg/mflag"
+	flag "flag"
 	"github.com/docker/docker/pkg/version"
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"
@@ -19,7 +19,7 @@ const (
 
 var (
 	flApiPrefix = flag.String(
-		[]string{"-SYSD_API_PREFIX"},
+		"SYSD_API_PREFIX",
 		env.GetString("SYSD_API_PREFIX", ""),
 		"Sysd API Server URL Prefix",
 	)

@@ -1,7 +1,7 @@
 package main
 
 import (
-	flag "github.com/docker/docker/pkg/mflag"
+	flag "flag"
 
 	apiserver "github.com/hacking-thursday/sysd/api/server2"
 )
