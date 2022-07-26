@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	log "github.com/Sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 	flag "github.com/docker/docker/pkg/mflag"
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"

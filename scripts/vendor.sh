@@ -76,7 +76,7 @@ function do_patch(){
     set -e
 }
 
-clone git v0.6.0  github.com/Sirupsen/logrus
+clone git v0.6.0  github.com/sirupsen/logrus
 clone git e444e69 github.com/gorilla/mux
 clone git 14f550f github.com/gorilla/context
 clone git 6070b2c github.com/tsaikd/KDGoLib
