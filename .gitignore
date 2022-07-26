@@ -30,3 +30,6 @@ _testmain.go
 *.test
 *.prof
 /debian/sysd.service
+
+# 
+go.sum
