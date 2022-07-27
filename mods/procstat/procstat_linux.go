@@ -8,7 +8,6 @@ package procstat
 
 import (
 	log "github.com/sirupsen/logrus"
-	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 	"io/ioutil"
 	"net/http"
@@ -63,7 +62,7 @@ func parse_cpu(s []string) CPU {
 	return cpu
 }
 
-func get_procstat(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func get_procstat(eng_ifce interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var output []byte
 	var procstat ProcStat
 	var cpus []CPU

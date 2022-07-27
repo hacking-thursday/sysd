@@ -3,7 +3,6 @@ package battery
 import (
 	"bytes"
 	log "github.com/sirupsen/logrus"
-	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 	"io/ioutil"
 	"net/http"
@@ -71,7 +70,7 @@ func get_battery_detail(name string) map[string]string {
 	return battery
 }
 
-func get_batterys(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func get_batterys(eng_ifce interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var output []byte
 	var batterys []map[string]string
 

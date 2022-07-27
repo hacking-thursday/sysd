@@ -1,7 +1,6 @@
 package osver
 
 import (
-	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 	"net/http"
 	"runtime"
@@ -13,7 +12,7 @@ func init() {
 	mods.Register("GET", "/osver", osver)
 }
 
-func osver(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func osver(eng_ifce interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var (
 		ver uint32
 		out []byte

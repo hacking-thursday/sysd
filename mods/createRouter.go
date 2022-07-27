@@ -1,20 +1,14 @@
 package mods
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"strings"
 
 	log "github.com/sirupsen/logrus"
 	flag "flag"
-	"github.com/docker/docker/pkg/version"
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"
-)
-
-const (
-	APIVERSION version.Version = "0.1"
 )
 
 var (
@@ -40,7 +34,7 @@ func CreateRouter(eng interface{}) (r *mux.Router, err error) {
 			localMethod := method
 
 			// build the handler function
-			f := makeHttpHandler(eng, localMethod, localRoute, localFct, APIVERSION)
+			f := makeHttpHandler(eng, localMethod, localRoute, localFct)
 
 			if strings.HasSuffix(localRoute, "/*") {
 				routeBase := prefix + "/" + strings.TrimSuffix(localRoute, "/*")
@@ -59,30 +53,15 @@ func CreateRouter(eng interface{}) (r *mux.Router, err error) {
 	return
 }
 
-func makeHttpHandler(eng interface{}, localMethod string, localRoute string, handlerFunc HttpApiFunc, dockerVersion version.Version) http.HandlerFunc {
+func makeHttpHandler(eng interface{}, localMethod string, localRoute string, handlerFunc HttpApiFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// log the request
 		log.Debugf("Calling %s %s", localMethod, localRoute)
 		log.Infof("%s %s", r.Method, r.RequestURI)
 
-		if strings.Contains(r.Header.Get("User-Agent"), "Docker-Client/") {
-			userAgent := strings.Split(r.Header.Get("User-Agent"), "/")
-			if len(userAgent) == 2 && !dockerVersion.Equal(version.Version(userAgent[1])) {
-				log.Debugf("Warning: client and server don't have the same version (client: %s, server: %s)", userAgent[1], dockerVersion)
-			}
-		}
-		version := version.Version(mux.Vars(r)["version"])
-		if version == "" {
-			version = APIVERSION
-		}
 		writeCorsHeaders(w, r)
 
-		if version.GreaterThan(APIVERSION) {
-			http.Error(w, fmt.Errorf("client and server don't have same version (client : %s, server: %s)", version, APIVERSION).Error(), http.StatusNotFound)
-			return
-		}
-
-		if err := handlerFunc(eng, version, w, r, mux.Vars(r)); err != nil {
+		if err := handlerFunc(eng, w, r, mux.Vars(r)); err != nil {
 			log.Errorf("Handler for %s %s returned error: %s", localMethod, localRoute, err)
 			HttpError(w, err)
 		}

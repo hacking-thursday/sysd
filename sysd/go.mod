@@ -2,8 +2,6 @@ module github.com/hacking-thursday/sysd
 
 go 1.18
 
-replace github.com/docker/docker/pkg/version => ../pkg/version
-
 replace github.com/hacking-thursday/sysd/api/server2 => ../api/server2
 
 replace github.com/hacking-thursday/sysd/mods/loader => ../mods/loader
@@ -13,7 +11,6 @@ replace github.com/hacking-thursday/sysd/mods => ../mods
 require github.com/hacking-thursday/sysd/api/server2 v0.0.0-00010101000000-000000000000
 
 require (
-	github.com/docker/docker/pkg/version v0.0.0-00010101000000-000000000000 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hacking-thursday/sysd/mods v0.0.0-00010101000000-000000000000 // indirect
 	github.com/hacking-thursday/sysd/mods/loader v0.0.0-00010101000000-000000000000 // indirect

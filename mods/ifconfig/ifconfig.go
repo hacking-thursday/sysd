@@ -4,8 +4,6 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/docker/docker/pkg/version"
-
 	"github.com/hacking-thursday/sysd/mods"
 	//        "fmt"
 )
@@ -43,7 +41,7 @@ type Counters struct {
 	Dropout     int
 }
 
-func ifconfig(engine interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func ifconfig(engine interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var (
 		out       []byte
 		outIfaces []iface_t

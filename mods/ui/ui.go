@@ -6,7 +6,6 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	flag "flag"
-	"github.com/docker/docker/pkg/version"
 	"github.com/tsaikd/KDGoLib/env"
 	"github.com/tsaikd/KDGoLib/futil"
 
@@ -41,7 +40,7 @@ func init() {
 	}
 }
 
-func handler_ui(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func handler_ui(eng_ifce interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	if len(r.URL.Path) < 4 {
 		http.Redirect(w, r, "/ui/", http.StatusMovedPermanently)
 		return

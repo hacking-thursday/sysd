@@ -2,7 +2,6 @@ package memstats
 
 import (
 	log "github.com/sirupsen/logrus"
-	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 	"net/http"
 	"runtime"
@@ -13,7 +12,7 @@ func init() {
 	mods.Register("GET", "/memstats", memstats)
 }
 
-func memstats(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func memstats(eng_ifce interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	var (
 		m   runtime.MemStats
 		out []byte

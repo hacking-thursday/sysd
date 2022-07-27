@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 )
 
@@ -25,7 +24,7 @@ func hex_to_ip(input string) string {
 	return fmt.Sprintf("%v.%v.%v.%v", a[3], a[2], a[1], a[0])
 }
 
-func handler(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func handler(eng_ifce interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	result := []map[string]string{}
 	header := []string{}
 	var out []byte

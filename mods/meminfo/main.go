@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/docker/docker/pkg/version"
 	"github.com/hacking-thursday/sysd/mods"
 )
 
@@ -18,7 +17,7 @@ func init() {
 	mods.Register("GET", "/meminfo", handler)
 }
 
-func handler(eng_ifce interface{}, version version.Version, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
+func handler(eng_ifce interface{}, w http.ResponseWriter, r *http.Request, vars map[string]string) (err error) {
 	target_path := "/proc/meminfo"
 	result := []map[string]string{}
 	var out []byte
