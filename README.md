@@ -1,31 +1,45 @@
-sysd: the daemon who supplies firsthand system data
-====
+A daemon providing system informations
 
-[![Join the chat at https://gitter.im/hacking-thursday/sysd](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/hacking-thursday/sysd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/hacking-thursday/sysd.svg?branch=master)](https://travis-ci.org/hacking-thursday/sysd)
+sysd collects the system informations, organizes them into well-structured data, and provides them in the RESTful HTTP API.
 
-sysd is an open source project to supply the system data with HTTP API in a
-lightweight daemon.
+## Features
 
-sysd implements a light dependeny daemon in golang, and provides /proc,/sys the
-firsthand system data in json/xml/... common formats with a high-level RESTful
-HTTP API. With sysd, application and plugin developers are able to save their
-works from parsing variant output from low-level unix command tools, and
-dependencies.
+- Thin and fast
+- HTTP RESTful API
+- JSON format
+- Less runtime dependencies
+- Save time from parsing variant commands's output
 
-## Installation
+## Development
 
-### Build sysd with docker
+Compile with the commands below:
 
 ```
-git clone https://github.com/hacking-thursday/sysd && cd sysd
-docker run --rm -v "$PWD:/usr/src/sysd" -w /usr/src/sysd golang ./configure
-docker run --rm -v "$PWD:/usr/src/sysd" -w /usr/src/sysd golang make
+make
+```
+
+and then launch the daemon with following command:
+
+```
+sudo DEBUG=1 ./sysd/sysd
 ```
 
 ## Usage
 
+To launch the daemon, just run:
+
 ```
-./sysd/sysd
-curl http://0.0.0.0:8/apilist
+sudo ./sysd/sysd
+```
+
+To get network interfaces list:
+
+```
+curl -sL http://127.0.0.1:8/ifconfig | jq
+```
+
+To get registered API functions:
+
+```
+curl -sL http://127.0.0.1:8/apilist | jq
 ```
