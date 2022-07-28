@@ -3,6 +3,9 @@ PWD=$(shell pwd)
 build:
 	./scripts/make.sh
 
+build_with_docker:
+	./scripts/build_with_docker
+
 doc:
 	@echo "" > docs/source/modules.rst
 	@find mods/ -name "README.rst" -exec echo ".. include:: ../../{}" >> docs/source/modules.rst \;

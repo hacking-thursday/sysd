@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+build_docker_image() {
+	tmpd=$(mktemp -d)
+	USER_UID=$(id --user)
+	cat >$tmpd/Dockerfile <<-EOD
+		FROM debian:latest
+		ENV DEBIAN_FRONTEND noninteractive
+		RUN apt update \
+			&& apt install -y \
+				build-essential \
+				golang \
+				sudo
+		RUN apt install -y ca-certificates && update-ca-certificates
+		RUN useradd --uid $USER_UID --create-home --shell /bin/bash pi ;\
+			echo "pi:raspberry" | chpasswd ;\
+			echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/pi
+		USER pi
+	EOD
+	docker build -t sysd_builder_${USER_UID}:$(docker_image_hash) $tmpd
+
+	rm -r $tmpd
+}
+
+docker_image_hash() {
+	declare -f build_docker_image | md5sum | cut -c-7
+}
+
+exec_outside_docker() {
+	ROOT_DIR=$(git rev-parse --show-toplevel)
+	USER_UID=$(id --user)
+	(docker image inspect sysd_builder_${USER_UID}:$(docker_image_hash) >&/dev/null) || {
+		build_docker_image || return 1
+	}
+	docker run --rm -it -v $ROOT_DIR:/tmp/build sysd_builder_${USER_UID}:$(docker_image_hash) /tmp/build/scripts/build_with_docker $@
+}
+
+exec_in_docker() {
+	source /etc/profile
+
+	cd /tmp/build
+	make
+}
+
+#
+# The scripts invoke itself like below:
+#   PROG -> exec_outside_docker() -> docker -> PROG -> exec_outside_docker()
+#
+if [ -e "/.dockerenv" ]; then
+	exec_in_docker $@
+else
+	exec_outside_docker $@
+fi
