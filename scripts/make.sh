@@ -7,5 +7,5 @@ set -e
 
 	export GOPATH="$(pwd)/.gopath:$(pwd)/vendor"
 	go get
-	go build -v
+	CGO_ENABLED=0 go build -v -ldflags="-extldflags=-static"
 )
