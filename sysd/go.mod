@@ -2,14 +2,8 @@ module sysd
 
 go 1.18
 
-replace github.com/hacking-thursday/sysd/mods/loader => ../mods/loader
-
-replace github.com/hacking-thursday/sysd/mods => ../mods
-
 require (
 	github.com/gorilla/mux v1.8.0
-	github.com/hacking-thursday/sysd/mods v0.0.0-00010101000000-000000000000
-	github.com/hacking-thursday/sysd/mods/loader v0.0.0-00010101000000-000000000000
 	github.com/sirupsen/logrus v1.9.0
 	github.com/tsaikd/KDGoLib v0.0.0-20211113074651-c6ea6ab4ee08
 )

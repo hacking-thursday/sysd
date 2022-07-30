@@ -11,8 +11,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/tsaikd/KDGoLib/env"
 
-	"github.com/hacking-thursday/sysd/mods"
-	_ "github.com/hacking-thursday/sysd/mods/loader"
+	"sysd/mods"
+	_ "sysd/mods/loader"
 )
 
 var (
